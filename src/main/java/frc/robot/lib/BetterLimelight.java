@@ -10,7 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.robot.Constants.Constants.LLConstants;
+import frc.robot.constants.Constants.LLConstants;
 
 public class BetterLimelight {
     private final NetworkTable table;

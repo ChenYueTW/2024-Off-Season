@@ -1,4 +1,4 @@
-package frc.robot.Constants;
+package frc.robot.constants;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
@@ -23,7 +23,11 @@ public final class Constants {
 
 	public static final class ControllerConstants { // TODO
 		public static final double INTAKE_SPEED = 0.3;
+		public static final double AMP_SPEED = 0.3;
 		public static final double SHOOTER_SPEED = 80.0;
+		public static final double ELEVATOR_GOAL_DEG = 0.0;
+		public static final double ELEVATOR_DEG_UP_LIMIT = 0.0;
+		public static final double ELEVATOR_DEG_DOWN_LIMIT = 0.0;
 		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 0.0;
 		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 0.0;
 	}

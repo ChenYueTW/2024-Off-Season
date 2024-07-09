@@ -1,8 +1,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DeviceId.Controller;
-import frc.robot.lib.Motor.ModuleTalon;
+import frc.robot.constants.DeviceId.Controller;
+import frc.robot.lib.motors.ModuleTalon;
 
 public class IntakeSubsystem extends SubsystemBase {
     private final ModuleTalon leftIntake;

@@ -1,4 +1,4 @@
-package frc.robot.lib.AprilTagFeild;
+package frc.robot.lib.aprilTagFeild;
 
 import edu.wpi.first.math.geometry.Translation2d;
 

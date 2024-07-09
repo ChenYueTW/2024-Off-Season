@@ -4,7 +4,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.lib.BetterLimelight;
 import frc.robot.lib.IDashboardProvider;
-import frc.robot.lib.AprilTagFeild.BlueAlliance;
+import frc.robot.lib.aprilTagFeild.BlueAlliance;
 
 public class Limelight implements IDashboardProvider {
     private final BetterLimelight limelight;

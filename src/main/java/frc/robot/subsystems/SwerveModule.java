@@ -8,9 +8,9 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants.Constants.SwerveConstants;
+import frc.robot.constants.Constants.SwerveConstants;
 import frc.robot.lib.IDashboardProvider;
-import frc.robot.lib.Motor.SwerveTalon;
+import frc.robot.lib.motors.SwerveTalon;
 
 public class SwerveModule implements IDashboardProvider {
     private final SwerveTalon driveMotor;
@@ -93,8 +93,8 @@ public class SwerveModule implements IDashboardProvider {
 
     @Override
     public void putDashboard() {
-        SmartDashboard.putNumber(this.motorName + " LinearSpeed", this.getState().speedMetersPerSecond);
-        SmartDashboard.putNumber(this.motorName + " TurnPosition", this.getTurnPosition());
+        SmartDashboard.putNumber(this.motorName + " DriveSpeed", this.getState().speedMetersPerSecond);
+        SmartDashboard.putNumber(this.motorName + " TurnPos", this.getTurnPosition());
     }
 
     public void stop() {

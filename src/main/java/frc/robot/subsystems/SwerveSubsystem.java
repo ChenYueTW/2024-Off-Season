@@ -15,13 +15,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.Constants;
-import frc.robot.Constants.Reverse;
-import frc.robot.Constants.Constants.AutoConstants;
-import frc.robot.Constants.Constants.EncoderOffset;
-import frc.robot.Constants.Constants.SwerveConstants;
-import frc.robot.Constants.DeviceId.Encoder;
-import frc.robot.Constants.DeviceId.Swerve;
+import frc.robot.constants.Constants;
+import frc.robot.constants.Reverse;
+import frc.robot.constants.Constants.AutoConstants;
+import frc.robot.constants.Constants.EncoderOffset;
+import frc.robot.constants.Constants.SwerveConstants;
+import frc.robot.constants.DeviceId.Encoder;
+import frc.robot.constants.DeviceId.Swerve;
 
 public class SwerveSubsystem extends SubsystemBase {
     private final SwerveModule frontLeft;
