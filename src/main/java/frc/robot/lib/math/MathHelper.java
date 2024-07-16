@@ -1,9 +1,10 @@
-package frc.robot.lib;
+package frc.robot.lib.math;
 
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import org.apache.commons.math3.util.FastMath;
 
 import edu.wpi.first.math.geometry.Translation2d;
 
@@ -22,5 +23,11 @@ public class MathHelper {
         double x = a.getX() - b.getX();
         double y = a.getY() - b.getY();
         return new Translation2d(x, y);
+    }
+    public static double applyMax(double a, double max) {
+        return FastMath.min(max, FastMath.abs(a)) * getSign(a);
+    }
+    public static double getSign(double a) {
+        return (a == 0) ? 0 : (a / FastMath.abs(a));
     }
 }

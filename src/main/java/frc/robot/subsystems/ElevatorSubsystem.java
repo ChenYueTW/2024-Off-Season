@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.Constants.ControllerConstants;
+import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.lib.motors.ModuleTalon;
 

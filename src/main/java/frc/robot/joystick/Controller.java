@@ -2,7 +2,7 @@ package frc.robot.joystick;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.constants.Constants;
+import frc.robot.constants.SwerveDriveConstants;
 
 public class Controller extends XboxController {
     public Controller(int port) {
@@ -31,10 +31,10 @@ public class Controller extends XboxController {
     }
 
     public double getShooterDirection() {
-        return MathUtil.applyDeadband(this.getLeftY(), Constants.DEAD_BAND);
+        return MathUtil.applyDeadband(this.getLeftY(), SwerveDriveConstants.DEAD_BAND);
     }
 
     public double getElevatorDirection() {
-        return MathUtil.applyDeadband(this.getRightY(), Constants.DEAD_BAND);
+        return MathUtil.applyDeadband(this.getRightY(), SwerveDriveConstants.DEAD_BAND);
     }
 }

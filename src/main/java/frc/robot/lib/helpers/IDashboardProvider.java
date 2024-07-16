@@ -1,4 +1,4 @@
-package frc.robot.lib;
+package frc.robot.lib.helpers;
 
 public interface IDashboardProvider {
     void putDashboard();

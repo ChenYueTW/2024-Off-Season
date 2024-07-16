@@ -6,7 +6,7 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
-public final class Constants {
+public class SwerveDriveConstants {
 	public static final class SwerveConstants {
 		public static final double TRACK_WIDTH = 0.66;
 		public static final double WHEEL_BASE = 0.66;
@@ -40,28 +40,28 @@ public final class Constants {
 	}
 
 	public static final SwerveDriveKinematics swerveDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(Constants.SwerveConstants.WHEEL_BASE / 2, Constants.SwerveConstants.TRACK_WIDTH / 2),
-        new Translation2d(Constants.SwerveConstants.WHEEL_BASE / 2, -Constants.SwerveConstants.TRACK_WIDTH / 2),
-        new Translation2d(-Constants.SwerveConstants.WHEEL_BASE / 2, Constants.SwerveConstants.TRACK_WIDTH / 2),
-        new Translation2d(-Constants.SwerveConstants.WHEEL_BASE / 2, -Constants.SwerveConstants.TRACK_WIDTH / 2)
+        new Translation2d(SwerveConstants.WHEEL_BASE / 2, SwerveConstants.TRACK_WIDTH / 2),
+        new Translation2d(SwerveConstants.WHEEL_BASE / 2, -SwerveConstants.TRACK_WIDTH / 2),
+        new Translation2d(-SwerveConstants.WHEEL_BASE / 2, SwerveConstants.TRACK_WIDTH / 2),
+        new Translation2d(-SwerveConstants.WHEEL_BASE / 2, -SwerveConstants.TRACK_WIDTH / 2)
     );
 
 	public static final class AutoConstants {
-		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 4.2;
+		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.0;
 		public static final double PHYSICAL_MAX_ACCELERATION_METERS_PER_SECONE = 0.5;
 	}
 
 	public static final class LLConstants {
-		public static final Vector3D CAMERA_POSE = new Vector3D(0, 0, 0);
-		public static final Vector3D CENTRAL_SIGHT = new Vector3D(0, 0, 0);
-		public static final Vector3D CAM_X_AXIS = new Vector3D(0, 0, 0);
-		public static final Vector3D CAM_Y_AXIS = new Vector3D(0, 0, 0);
-		@SuppressWarnings("deprecation")
-		public static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 1.0));
+		public static final Vector3D CAMERA_POSE = new Vector3D(-0.245, -0.25, 0.44);
+		public static final Vector3D CENTRAL_SIGHT = new Vector3D(0.37, 0.91, -0.44);
+		public static final Vector3D CAM_X_AXIS = new Vector3D(0.91, -0.12, 0);
+		public static final Vector3D CAM_Y_AXIS = new Vector3D(0.05, 0.4, 0.83);
+		public static final double TOLERANCE = 0.000329;
+		public static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 1.0), TOLERANCE);
 	}
 
     public static final double DEAD_BAND = 0.05;
-	public static final double MAX_SPEED = 0.8;
-	public static final double MAX_ANGULAR_SPEED = 1.3;
+	public static final double MAX_SPEED = 1.0;
+	public static final double MAX_ANGULAR_SPEED = 1.0;
 	public static final boolean gyroField = true;
 }

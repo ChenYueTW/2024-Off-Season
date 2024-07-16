@@ -8,8 +8,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.constants.Constants.SwerveConstants;
-import frc.robot.lib.IDashboardProvider;
+import frc.robot.constants.SwerveDriveConstants.SwerveConstants;
+import frc.robot.lib.helpers.IDashboardProvider;
 import frc.robot.lib.motors.SwerveTalon;
 
 public class SwerveModule implements IDashboardProvider {
@@ -39,7 +39,7 @@ public class SwerveModule implements IDashboardProvider {
 
         this.turnEncoder = new CANcoder(turnEncoderPort);
 
-        this.drivePidController = new PIDController(0.0, 0.0, 0.0);
+        this.drivePidController = new PIDController(0.015, 0.15, 0.0);
         this.turnPidController = new PIDController(0.009, 0, 0);
         this.turnPidController.enableContinuousInput(-180, 180);
 

@@ -1,11 +1,11 @@
 package frc.robot.constants;
 
-public final class DeviceId {
+public class DeviceId {
     public enum Swerve {
         frontLeftDrive(2), frontLeftTurn(1),
-        backLeftDrive(5), backLeftTurn(6),
+        backLeftDrive(6), backLeftTurn(5),
         frontRightDrive(4), frontRightTurn(3),
-        backRightDrive(7), backRightTurn(8);
+        backRightDrive(8), backRightTurn(7);
 
         private final int port;
 

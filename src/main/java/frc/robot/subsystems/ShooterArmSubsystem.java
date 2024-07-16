@@ -5,10 +5,10 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.Constants.ControllerConstants;
+import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.constants.DeviceId.Encoder;
-import frc.robot.lib.IDashboardProvider;
+import frc.robot.lib.helpers.IDashboardProvider;
 import frc.robot.lib.motors.ModuleTalon;
 
 public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProvider {
