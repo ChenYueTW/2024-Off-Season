@@ -1,0 +1,7 @@
+2024/7/19 v1.0.0
+- Added changelog.txt
+- Added Shooter Subsystem, Command
+- Added Shooter Arm Subsystem, Command
+- Change Shooter PID to respective controls
+- Optimization Swerve Drive PID
+- Upgrade gradle 2024.2.1 to 2024.3.2

@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.constants.SwerveDriveConstants.SwerveConstants;
 import frc.robot.lib.helpers.IDashboardProvider;
+import frc.robot.lib.math.MathHelper;
 import frc.robot.lib.motors.SwerveTalon;
 
 public class SwerveModule implements IDashboardProvider {
@@ -39,7 +40,7 @@ public class SwerveModule implements IDashboardProvider {
 
         this.turnEncoder = new CANcoder(turnEncoderPort);
 
-        this.drivePidController = new PIDController(0.015, 0.15, 0.0);
+        this.drivePidController = new PIDController(0.06, 0.42, 0.0);
         this.turnPidController = new PIDController(0.009, 0, 0);
         this.turnPidController.enableContinuousInput(-180, 180);
 
@@ -79,9 +80,10 @@ public class SwerveModule implements IDashboardProvider {
             return;
         }
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, this.getState().angle);
+        double speedMetersPerSecond = MathHelper.applyMax(state.speedMetersPerSecond, SwerveConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND);
 
         this.driveOutput = this.drivePidController.calculate(
-            this.getState().speedMetersPerSecond, state.speedMetersPerSecond
+            this.getState().speedMetersPerSecond, speedMetersPerSecond
         );
         this.turnOutput = this.turnPidController.calculate(
             this.getTurnPosition(), state.angle.getDegrees()

@@ -19,9 +19,9 @@ public class DeviceId {
     }
 
     public enum Controller {
-        leftIntake(17), rightIntake(14),
-        leftShooter(0), rightShooter(0),
-        shooterArm(0),
+        leftIntake(0), rightIntake(0),
+        leftShooter(14), rightShooter(15),
+        shooterArm(13),
         elevator(0),
         amp(0);
 

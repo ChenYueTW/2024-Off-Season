@@ -20,7 +20,7 @@ public class ShooterArmCmd extends Command {
 
 	@Override
 	public void execute() {
-		this.shooterArmSubsystem.execute(this.speed.get());
+		this.shooterArmSubsystem.execute(this.speed.get() * 1.0);
 	}
 
 	@Override

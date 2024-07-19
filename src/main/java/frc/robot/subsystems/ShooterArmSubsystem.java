@@ -24,15 +24,16 @@ public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProv
     }
 
     public void execute(double speed) {
-        if (this.getPosition() < ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT && speed > 0) {
+        if (this.getPosition() < ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT && speed < 0) {
             this.shooterArm.set(speed);
-        } else if (this.getPosition() > ControllerConstants.SHOOTER_ARM_DEG_UP_LIMIT && speed < 0) {
+        } else if (this.getPosition() > ControllerConstants.SHOOTER_ARM_DEG_UP_LIMIT && speed > 0) {
             this.shooterArm.set(speed);
         } else if (this.getPosition() >= ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT && this.getPosition() <= ControllerConstants.SHOOTER_ARM_DEG_UP_LIMIT) {
             this.shooterArm.set(speed);
         } else {
             this.shooterArm.stopMotor();
         }
+        // this.shooterArm.set(speed);
     }
 
     public void stopShooterArm() {

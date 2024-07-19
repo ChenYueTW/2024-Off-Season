@@ -12,7 +12,7 @@ public class SwerveDriveConstants {
 		public static final double WHEEL_BASE = 0.66;
 		public static final double WHEEL_RADIUS = 0.0508;
 		
-		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.0;
+		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 4.0;
 		public static final double PHYSICAL_MAX_ACCELERATION_METERS_PER_SECONE = 3.0;
 		public static final double DRIVE_GEAR_RATIO = 1.0 / 8.14;
 		public static final double TURN_GEAR_RATIO = 7.0 / 150.0;
@@ -28,8 +28,8 @@ public class SwerveDriveConstants {
 		public static final double ELEVATOR_GOAL_DEG = 0.0;
 		public static final double ELEVATOR_DEG_UP_LIMIT = 0.0;
 		public static final double ELEVATOR_DEG_DOWN_LIMIT = 0.0;
-		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 0.0;
-		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 0.0;
+		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 238.76669396916733;
+		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 14.080007351500184;
 	}
 
 	public static final class EncoderOffset {
@@ -52,16 +52,16 @@ public class SwerveDriveConstants {
 	}
 
 	public static final class LLConstants {
-		public static final Vector3D CAMERA_POSE = new Vector3D(-0.245, -0.25, 0.44);
-		public static final Vector3D CENTRAL_SIGHT = new Vector3D(0.37, 0.91, -0.44);
-		public static final Vector3D CAM_X_AXIS = new Vector3D(0.91, -0.12, 0);
-		public static final Vector3D CAM_Y_AXIS = new Vector3D(0.05, 0.4, 0.83);
-		public static final double TOLERANCE = 0.000329;
-		public static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 1.0), TOLERANCE);
+		public static final double TOLERANCE = 0.125;
+		public static final Vector3D CAMERA_POSE = new Vector3D(-0.25, -0.225, 0.459);
+		public static final Vector3D CENTRAL_SIGHT = new Vector3D(0.88, 0.03, -0.46);
+		public static final Vector3D CAM_X_AXIS = new Vector3D(0.03, -0.88, 0);
+		public static final Vector3D CAM_Y_AXIS = new Vector3D(0.4, 0.01, 0.77);
+        public static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 0.005), TOLERANCE);
 	}
 
     public static final double DEAD_BAND = 0.05;
-	public static final double MAX_SPEED = 1.0;
-	public static final double MAX_ANGULAR_SPEED = 1.0;
+	public static final double MAX_SPEED = 4.0;
+	public static final double MAX_ANGULAR_SPEED = 4.0;
 	public static final boolean gyroField = true;
 }

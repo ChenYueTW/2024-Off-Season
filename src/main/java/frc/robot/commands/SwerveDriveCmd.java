@@ -22,7 +22,7 @@ public class SwerveDriveCmd extends Command {
 	@Override
 	public void execute() {
 		double xSpeed = -MathUtil.applyDeadband(this.controller.getLeftX(), SwerveDriveConstants.DEAD_BAND) * SwerveDriveConstants.MAX_SPEED;
-		double ySpeed = -MathUtil.applyDeadband(this.controller.getLeftY(), SwerveDriveConstants.DEAD_BAND) * SwerveDriveConstants.MAX_SPEED;
+		double ySpeed = MathUtil.applyDeadband(this.controller.getLeftY(), SwerveDriveConstants.DEAD_BAND) * SwerveDriveConstants.MAX_SPEED;
 		double rotation = -MathUtil.applyDeadband(this.controller.getRightX(), SwerveDriveConstants.DEAD_BAND) * SwerveDriveConstants.MAX_ANGULAR_SPEED;
 
 		if (this.controller.getAButton()) {

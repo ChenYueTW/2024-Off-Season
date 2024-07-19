@@ -23,7 +23,7 @@ public class Limelight extends SubsystemBase implements IDashboardProvider {
     }
 
     public Translation2d getNotePositionVector() {
-        if (this.noNoteTarget()) return null;
+        if (this.noNoteTarget()) return new Translation2d(0.0, 0.0);
         return NotePosEstimator.getPositionVector(this.noteTx.get(), this.noteTy.get());
     }
 
@@ -37,6 +37,8 @@ public class Limelight extends SubsystemBase implements IDashboardProvider {
 
     @Override
     public void putDashboard() {
+        // SmartDashboard.putNumber("Note Distance X", this.getNotePositionVector().getX());
+        // SmartDashboard.putNumber("Note Distance Y", this.getNotePositionVector().getY());
         SmartDashboard.putNumber("Note Distance", this.getNoteGroundDistance());
         // SmartDashboard.putBoolean("is", this.noNoteTarget());
     }
