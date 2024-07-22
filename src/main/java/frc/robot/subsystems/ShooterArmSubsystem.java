@@ -23,6 +23,11 @@ public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProv
         this.angleAdjustmentPid = new PIDController(0.0, 0.0, 0.0);
     }
 
+    public void toGoalDegrees(double degrees) {
+        double speed = this.angleAdjustmentPid.calculate(this.getPosition(), degrees);
+        this.execute(speed);
+    }
+
     public void execute(double speed) {
         if (this.getPosition() < ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT && speed < 0) {
             this.shooterArm.set(speed);
@@ -33,7 +38,6 @@ public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProv
         } else {
             this.shooterArm.stopMotor();
         }
-        // this.shooterArm.set(speed);
     }
 
     public void stopShooterArm() {
@@ -48,4 +52,7 @@ public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProv
     public void putDashboard() {
         SmartDashboard.putNumber("Shooter Arm Deg", this.getPosition());
     }
+
+    @Override
+    public void putDashboardOnce() {}
 }

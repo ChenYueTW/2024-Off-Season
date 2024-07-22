@@ -20,16 +20,22 @@ public class ElevatorSubsystem extends SubsystemBase {
         return Units.rotationsToDegrees(this.elevator.getPosition().getValue());
     }
 
-    public double caculateSpeed() {
-        return this.heightAdjustmentPid.calculate(this.getPosition(), ControllerConstants.ELEVATOR_GOAL_DEG);
+    public void decline() {
+        double speed = this.heightAdjustmentPid.calculate(this.elevator.getPosition().getValue(), ControllerConstants.ELEVATOR_ROT_UP_LIMIT);
+        this.execute(speed);
+    }
+
+    public void rise() {
+        double speed = this.heightAdjustmentPid.calculate(this.elevator.getPosition().getValue(), ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT);
+        this.execute(speed);
     }
 
     public void execute(double speed) {
-        if (this.getPosition() < ControllerConstants.ELEVATOR_DEG_DOWN_LIMIT && speed > 0) {
+        if (this.elevator.getPosition().getValue() < ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT && speed > 0) {
             this.elevator.set(speed);
-        } else if (this.getPosition() > ControllerConstants.ELEVATOR_DEG_UP_LIMIT && speed < 0) {
+        } else if (this.elevator.getPosition().getValue() > ControllerConstants.ELEVATOR_ROT_UP_LIMIT && speed < 0) {
             this.elevator.set(speed);
-        } else if (this.getPosition() >= ControllerConstants.ELEVATOR_DEG_DOWN_LIMIT && this.getPosition() <= ControllerConstants.ELEVATOR_DEG_UP_LIMIT) {
+        } else if (this.elevator.getPosition().getValue() >= ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT && this.getPosition() <= ControllerConstants.ELEVATOR_ROT_UP_LIMIT) {
             this.elevator.set(speed);
         } else {
             this.elevator.stopMotor();

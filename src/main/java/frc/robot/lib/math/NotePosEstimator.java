@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.constants.SwerveDriveConstants.LLConstants;
 
 public class NotePosEstimator {
-    @SuppressWarnings("deprecation")
     public static Translation2d getPositionVector(double tx, double ty) {
         Rotation xRot = new Rotation(LLConstants.CAM_Y_AXIS, -tx, RotationConvention.VECTOR_OPERATOR);
         Rotation yRot = new Rotation(LLConstants.CAM_X_AXIS, ty, RotationConvention.VECTOR_OPERATOR);

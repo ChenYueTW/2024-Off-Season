@@ -17,18 +17,22 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
         this.registerDashboard();
         this.leftShooter = new ModuleTalon(Controller.leftShooter.get(), false, false);
         this.rightShooter = new ModuleTalon(Controller.rightShooter.get(), true, false);
-        this.leftPid = new PIDController(0.0, 3.5, 0.0);
-        this.rightPid = new PIDController(0.0, 3.5, 0.0);
+        this.leftPid = new PIDController(0.5, 0.25, 0.0003);
+        this.rightPid = new PIDController(0.5, 0.28, 0.0003);
     }
 
     public void execute(double goalSpeed) { // Rotation Per Second
         double leftSpeed = this.leftPid.calculate(
             this.leftShooter.getVelocity().getValue(), 80.0);
         double rightSpeed = this.rightPid.calculate(
-            this.rightShooter.getVelocity().getValue(), 70.0);
+            this.rightShooter.getVelocity().getValue(), 60.0);
 
         this.leftShooter.set(leftSpeed);
         this.rightShooter.set(rightSpeed);
+    }
+
+    public boolean canShoot() {
+        return this.leftShooter.getVelocity().getValue() >= 75.0 && this.rightShooter.getVelocity().getValue() >= 65.0;
     }
 
     public void stopShooter() {
@@ -40,5 +44,9 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
     public void putDashboard() {
         SmartDashboard.putNumber("Left Velocity", this.leftShooter.getVelocity().getValue());
         SmartDashboard.putNumber("Right Velocity", this.rightShooter.getVelocity().getValue());
+        SmartDashboard.putBoolean("CanShoot", this.canShoot());
     }
+
+    @Override
+    public void putDashboardOnce() {}
 }

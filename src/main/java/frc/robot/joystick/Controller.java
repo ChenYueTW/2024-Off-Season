@@ -13,6 +13,10 @@ public class Controller extends XboxController {
     public boolean isShoot() {
         return this.getLeftBumper();
     }
+
+    public boolean autoAim() {
+        return this.getRightBumper();
+    }
     
     public boolean isIntake() {
         return this.getBButton();

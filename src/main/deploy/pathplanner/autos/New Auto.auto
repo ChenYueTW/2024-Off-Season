@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.76,
+      "y": 6.7
+    },
+    "rotation": 60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Narrow.Middle2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle 2 Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle 2 to 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle 1 to Alliance Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftToMiddle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleToRight"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

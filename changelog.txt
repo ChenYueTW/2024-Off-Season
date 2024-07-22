@@ -1,7 +1,15 @@
-2024/7/19 v1.0.0
+2024/7/19 v1.0
 - Added changelog.txt
 - Added Shooter Subsystem, Command
 - Added Shooter Arm Subsystem, Command
 - Change Shooter PID to respective controls
 - Optimization Swerve Drive PID
 - Upgrade gradle 2024.2.1 to 2024.3.2
+
+2024/7/22 v1.1
+- Added Path Planner system
+- Added Shooter arm to auto aim speaker
+- Fixed Swerve Motor ID and reverse BUG
+- Turned Swerve drive PID
+- Updated IDashboardProvider
+- Optimized Elevator subsystem

@@ -4,6 +4,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.util.Units;
+import frc.robot.constants.SwerveDriveConstants.SwerveConstants;
 
 public class SwerveTalon extends TalonFX {
     double gearRatio;
@@ -21,11 +22,11 @@ public class SwerveTalon extends TalonFX {
     }
 
     public double getMotorVelocity() {
-        return this.getVelocity().getValue() * this.gearRatio;
+        return this.getVelocity().getValue() * this.gearRatio * 2.0 * SwerveConstants.WHEEL_RADIUS * Math.PI;
     }
     
     public double getMotorPosition() {
-        return this.getPosition().getValue() * this.gearRatio;
+        return this.getPosition().getValue() * this.gearRatio * 2.0 * SwerveConstants.WHEEL_RADIUS * Math.PI;
     }
 
     public double getTurnPosition() {

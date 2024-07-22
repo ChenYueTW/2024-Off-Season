@@ -42,4 +42,7 @@ public class Limelight extends SubsystemBase implements IDashboardProvider {
         SmartDashboard.putNumber("Note Distance", this.getNoteGroundDistance());
         // SmartDashboard.putBoolean("is", this.noNoteTarget());
     }
+
+    @Override
+    public void putDashboardOnce() {}
 }

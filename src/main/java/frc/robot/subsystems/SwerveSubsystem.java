@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -16,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.SwerveDriveConstants;
@@ -34,13 +36,14 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SwerveModule backLeft;
     private final SwerveModule backRight;
     private final AHRS gyro;
-    private final SwerveDriveOdometry odometry;
+    private static SwerveDriveOdometry odometry;
     private final PIDController drivePIDController = new PIDController(
             3.0, 0.0, 0.0,0.01); // TODO re-tune PID
     private final PIDController steerPIDController = new PIDController(
             2.5, 0.08, 0.0,0.01); // TODO re-tune PID
     private final PIDController noteSteerPIDController = new PIDController(
             2.0, 0.08, 0.0,0.01);
+    private final Field2d field = new Field2d();
 
     public SwerveSubsystem() {
         this.frontLeft = new SwerveModule(
@@ -80,21 +83,23 @@ public class SwerveSubsystem extends SubsystemBase {
             "backRight"
         );
         this.gyro = new AHRS(SPI.Port.kMXP);
-        this.odometry = new SwerveDriveOdometry(
+        odometry = new SwerveDriveOdometry(
             SwerveDriveConstants.swerveDriveKinematics, this.gyro.getRotation2d(), this.getModulePosition()
         );
         this.wait(1000);
         this.gyro.reset();
 
         AutoBuilder.configureHolonomic(
-            this::getPose, 
+            SwerveSubsystem::getPose, 
             this::resetPose,
             this::getSpeeds,
             this::autoDrive, 
             new HolonomicPathFollowerConfig(
-                SwerveDriveConstants.AutoConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND,
-                0.3,
-                new ReplanningConfig(true, true)
+                new PIDConstants(5.0, 0.05, 0.0),
+                new PIDConstants(5.0, 0.0, 0.0),
+                AutoConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND,
+                0.637808,
+                new ReplanningConfig()
             ),
             () -> {
                 if (DriverStation.getAlliance().isPresent()) {
@@ -104,11 +109,13 @@ public class SwerveSubsystem extends SubsystemBase {
             },
             this
         );
+        SmartDashboard.putData("Field", field);
     }
 
     @Override
     public void periodic() {
-        this.odometry.update(this.gyro.getRotation2d(), getModulePosition());
+        odometry.update(this.gyro.getRotation2d(), getModulePosition());
+        field.setRobotPose(getPose());
     }
 
     public void driveSwerve(double xSpeed, double ySpeed, double rotation, boolean field) {
@@ -168,12 +175,12 @@ public class SwerveSubsystem extends SubsystemBase {
         };
     }
 
-    public Pose2d getPose() {
-        return this.odometry.getPoseMeters();
+    public static Pose2d getPose() {
+        return odometry.getPoseMeters();
     }
 
     public void resetPose(Pose2d pose) {
-        this.odometry.resetPosition(this.gyro.getRotation2d(), this.getModulePosition(), pose);
+        odometry.resetPosition(this.gyro.getRotation2d(), this.getModulePosition(), pose);
     }
 
     public ChassisSpeeds getSpeeds() {

@@ -40,8 +40,8 @@ public class SwerveModule implements IDashboardProvider {
 
         this.turnEncoder = new CANcoder(turnEncoderPort);
 
-        this.drivePidController = new PIDController(0.06, 0.42, 0.0);
-        this.turnPidController = new PIDController(0.009, 0, 0);
+        this.drivePidController = new PIDController(0.15, 0.45, 0.0);
+        this.turnPidController = new PIDController(0.009, 0.0, 0.0);
         this.turnPidController.enableContinuousInput(-180, 180);
 
         this.motorName = motorName;
@@ -98,6 +98,9 @@ public class SwerveModule implements IDashboardProvider {
         SmartDashboard.putNumber(this.motorName + " DriveSpeed", this.getState().speedMetersPerSecond);
         SmartDashboard.putNumber(this.motorName + " TurnPos", this.getTurnPosition());
     }
+
+    @Override
+    public void putDashboardOnce() {}
 
     public void stop() {
         this.driveMotor.set(0.0);

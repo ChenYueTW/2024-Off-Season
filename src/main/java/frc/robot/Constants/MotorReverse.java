@@ -2,10 +2,10 @@ package frc.robot.constants;
 
 public class MotorReverse {
     public enum Reverse {
-        frontLeftDrive(true), frontLeftTurn(true),
-        frontRightDrive(false), frontRightTurn(true),
-        backLeftDrive(true), backLeftTurn(true),
-        backRightDrive(false), backRightTurn(true);
+        frontLeftDrive(false), frontLeftTurn(true),
+        frontRightDrive(true), frontRightTurn(true),
+        backLeftDrive(false), backLeftTurn(true),
+        backRightDrive(true), backRightTurn(true);
     
         private final boolean reverse;
     

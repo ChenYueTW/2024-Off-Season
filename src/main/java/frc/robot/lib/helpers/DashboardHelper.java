@@ -21,6 +21,10 @@ public final class DashboardHelper {
         providers.forEach(IDashboardProvider::putDashboard);
     }
 
+    public static void putAllRegistriesOnce() {
+        providers.forEach(IDashboardProvider::putDashboardOnce);
+    }
+
     public static void enableRegistration() {
         providers.clear();
         isRegistrationValid = true;

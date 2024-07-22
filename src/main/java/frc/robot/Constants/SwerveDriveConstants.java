@@ -12,22 +12,18 @@ public class SwerveDriveConstants {
 		public static final double WHEEL_BASE = 0.66;
 		public static final double WHEEL_RADIUS = 0.0508;
 		
-		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 4.0;
+		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.0;
 		public static final double PHYSICAL_MAX_ACCELERATION_METERS_PER_SECONE = 3.0;
-		public static final double DRIVE_GEAR_RATIO = 1.0 / 8.14;
+		public static final double DRIVE_GEAR_RATIO = 7.0 / 57.0;
 		public static final double TURN_GEAR_RATIO = 7.0 / 150.0;
-
-		public static final double DRIVE_VELOCITY_CONVERSION_FACTOR = (1.0 / DRIVE_GEAR_RATIO / 2048) * WHEEL_RADIUS * Math.PI * 10;
-		public static final double DRIVE_POSITION_CONVERSION_FACTOR = (1.0 / DRIVE_GEAR_RATIO / 2048) * WHEEL_RADIUS * Math.PI;
 	}
 
 	public static final class ControllerConstants { // TODO
 		public static final double INTAKE_SPEED = 0.3;
 		public static final double AMP_SPEED = 0.3;
 		public static final double SHOOTER_SPEED = 80.0;
-		public static final double ELEVATOR_GOAL_DEG = 0.0;
-		public static final double ELEVATOR_DEG_UP_LIMIT = 0.0;
-		public static final double ELEVATOR_DEG_DOWN_LIMIT = 0.0;
+		public static final double ELEVATOR_ROT_UP_LIMIT = 0.0;
+		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;
 		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 238.76669396916733;
 		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 14.080007351500184;
 	}
@@ -47,8 +43,8 @@ public class SwerveDriveConstants {
     );
 
 	public static final class AutoConstants {
-		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.0;
-		public static final double PHYSICAL_MAX_ACCELERATION_METERS_PER_SECONE = 0.5;
+		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.9;
+		public static final double PHYSICAL_MAX_ACCELERATION_METERS_PER_SECONE = 3.0;
 	}
 
 	public static final class LLConstants {
@@ -61,7 +57,7 @@ public class SwerveDriveConstants {
 	}
 
     public static final double DEAD_BAND = 0.05;
-	public static final double MAX_SPEED = 4.0;
-	public static final double MAX_ANGULAR_SPEED = 4.0;
+	public static final double MAX_SPEED = 2.5;
+	public static final double MAX_ANGULAR_SPEED = 1.5;
 	public static final boolean gyroField = true;
 }

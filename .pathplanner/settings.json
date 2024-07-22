@@ -1,0 +1,16 @@
+{
+  "robotWidth": 0.66,
+  "robotLength": 0.66,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Middle Alliance Line",
+    "Middle Line",
+    "Shoot"
+  ],
+  "autoFolders": [],
+  "defaultMaxVel": 3.9,
+  "defaultMaxAccel": 3.0,
+  "defaultMaxAngVel": 360.0,
+  "defaultMaxAngAccel": 360.0,
+  "maxModuleSpeed": 4.0
+}
