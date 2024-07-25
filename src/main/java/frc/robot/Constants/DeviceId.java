@@ -19,11 +19,11 @@ public class DeviceId {
     }
 
     public enum Controller {
-        leftIntake(0), rightIntake(0),
-        leftShooter(14), rightShooter(15),
         shooterArm(13),
-        elevator(0),
-        amp(0);
+        leftShooter(14), rightShooter(15),
+        leftIntake(16), rightIntake(17),
+        elevator(18),
+        amp(19);
 
         private final int port;
 

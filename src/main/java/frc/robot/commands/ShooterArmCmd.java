@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
-import frc.robot.lib.math.ShooterPosEstimator;
+import frc.robot.lib.math.ShooterPoseEstimator;
 import frc.robot.subsystems.ShooterArmSubsystem;
 
 public class ShooterArmCmd extends Command {
@@ -25,7 +25,7 @@ public class ShooterArmCmd extends Command {
 	@Override
 	public void execute() {
 		if (this.isAutoAim.get()) {
-			double goalPosition = ShooterPosEstimator.getPosition() + ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT;
+			double goalPosition = ShooterPoseEstimator.getPosition() + ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT;
 			this.shooterArmSubsystem.toGoalDegrees(goalPosition);
 		}
 		this.shooterArmSubsystem.execute(this.speed.get() * 1.0);

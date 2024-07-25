@@ -1,15 +1,15 @@
-package frc.robot.auto;
+package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class AutoTrackNote extends Command {
 	private final SwerveSubsystem swerveSubsystem;
-	private final Limelight limelight;
+	private final VisionSubsystem limelight;
 
-	public AutoTrackNote(SwerveSubsystem swerveSubsystem, Limelight limelight) {
+	public AutoTrackNote(SwerveSubsystem swerveSubsystem, VisionSubsystem limelight) {
 		this.swerveSubsystem = swerveSubsystem;
 		this.limelight = limelight;
 		addRequirements(this.swerveSubsystem);

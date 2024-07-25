@@ -1,14 +1,17 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.DeviceId.Controller;
-import frc.robot.lib.motors.ModuleTalon;
 
 public class AmpSubsystem extends SubsystemBase {
-    private final ModuleTalon ampMotor;
+    private final CANSparkMax ampMotor;
 
+    @SuppressWarnings("removal")
     public AmpSubsystem() {
-        this.ampMotor = new ModuleTalon(Controller.amp.get(), false, true);
+        this.ampMotor = new CANSparkMax(Controller.amp.get(), MotorType.kBrushless);
     }
 
     public void execute(double speed) {

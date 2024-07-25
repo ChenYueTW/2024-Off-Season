@@ -2,7 +2,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.lib.helpers.IDashboardProvider;
 import frc.robot.lib.motors.ModuleTalon;
@@ -20,19 +24,25 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
         this.leftPid = new PIDController(0.5, 0.25, 0.0003);
         this.rightPid = new PIDController(0.5, 0.28, 0.0003);
     }
-
-    public void execute(double goalSpeed) { // Rotation Per Second
+    public void execute() { // Rotation Per Second
         double leftSpeed = this.leftPid.calculate(
-            this.leftShooter.getVelocity().getValue(), 80.0);
+            this.leftShooter.getVelocity().getValue(), 85.0);
         double rightSpeed = this.rightPid.calculate(
-            this.rightShooter.getVelocity().getValue(), 60.0);
+            this.rightShooter.getVelocity().getValue(), 65.0);
 
         this.leftShooter.set(leftSpeed);
         this.rightShooter.set(rightSpeed);
     }
 
     public boolean canShoot() {
-        return this.leftShooter.getVelocity().getValue() >= 75.0 && this.rightShooter.getVelocity().getValue() >= 65.0;
+        return this.leftShooter.getVelocity().getValue() >= 75.0 && this.rightShooter.getVelocity().getValue() >= 60.0;
+    }
+
+    public Command autoExecute() {
+        return new ParallelRaceGroup(
+            new WaitCommand(1.3),
+            Commands.runEnd(this::execute, this::stopShooter, this)
+        );
     }
 
     public void stopShooter() {
@@ -42,8 +52,8 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
 
     @Override
     public void putDashboard() {
-        SmartDashboard.putNumber("Left Velocity", this.leftShooter.getVelocity().getValue());
-        SmartDashboard.putNumber("Right Velocity", this.rightShooter.getVelocity().getValue());
+        SmartDashboard.putNumber("Left", this.leftShooter.getVelocity().getValue());
+        SmartDashboard.putNumber("Right", this.rightShooter.getVelocity().getValue());
         SmartDashboard.putBoolean("CanShoot", this.canShoot());
     }
 

@@ -13,3 +13,21 @@
 - Turned Swerve drive PID
 - Updated IDashboardProvider
 - Optimized Elevator subsystem
+
+2024/7/25 v1.2
+- Added auto shoot command, config bindings
+- Added Shooter auto Aim speaker math
+- Added autoShoot, conveyNote button from ButtonStation
+- Added AprilTagField z axis, rotation value and get it function
+- Added VisionHelper to process two limelight 2+
+- Added AprilTagPoseEstimator to rotation to speaker
+- Added ShooterPoseEstimator to achieve auto aiming
+- Added IntakeSubsystem releaseNote command
+- Added ShooterSubsysem autoExecute command
+- Renamed BlueAlliance.java to AprilTagField.java
+- Renamed Limelight.java to VisionSubsystem.java
+- Changed path auto/AutoTrackNote.java to command/AutoTrakNote.java
+- Changed AmpSubsystem motor from talonFX to Neo spark
+- Fixed Motor Id, Motor Revere Bug
+- Move SwerveDriveConstants.LLConstants to NotePoseEstimator
+- Completed ElevatorCmd.java

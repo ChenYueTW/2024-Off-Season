@@ -1,8 +1,7 @@
 package frc.robot;
 
-import java.util.List;
-
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -17,8 +16,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.auto.AutoTrackNote;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.AmpCmd;
+import frc.robot.commands.AutoTrackNote;
+import frc.robot.commands.ElevatorCmd;
 import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.ShooterArmCmd;
 import frc.robot.commands.ShooterCmd;
@@ -28,8 +29,9 @@ import frc.robot.joystick.Controller;
 import frc.robot.joystick.Driver;
 import frc.robot.lib.helpers.IDashboardProvider;
 import frc.robot.subsystems.AmpSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.ShooterArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -37,40 +39,51 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer implements IDashboardProvider {
 	private final Driver driverJoystick = new Driver(Driver.DRIVER_PORT);
 	private final Controller controllerJoystick = new Controller(Controller.CONTROLLER_PORT);
-	// private final ButtonStation buttonStation = new ButtonStation(ButtonStation.BUTTON_STATION_PORT);
+	private final ButtonStation buttonStation = new ButtonStation(ButtonStation.BUTTON_STATION_PORT);
 
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-	private final Limelight limelight = new Limelight();
-	// private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-	// private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	private final VisionSubsystem limelight = new VisionSubsystem();
+	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
-	// private final AmpSubsystem ampSubsystem = new AmpSubsystem();
-
-	private final SwerveDriveCmd swerveDriveCmd = new SwerveDriveCmd(swerveSubsystem, driverJoystick);
-	// private final IntakeCmd intakeCmd = new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease);
-	// private final ShooterCmd shooterCmd = new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot);
-	private final ShooterArmCmd shooterArmCmd = new ShooterArmCmd(shooterArmSubsystem, controllerJoystick::getShooterDirection, controllerJoystick::autoAim);
-	// private final AmpCmd ampCmd = new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput);
+	private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+	private final AmpSubsystem ampSubsystem = new AmpSubsystem();
 
 	private final SendableChooser<Command> autoCommandChooser;
 
 	public RobotContainer() {
-		this.setDefaultCommand();
-		this.registerCommand();
+		this.setDefaultCommands();
+		this.registerCommands();
+		this.configBindings();
 		this.registerDashboard();
 
 		this.autoCommandChooser = AutoBuilder.buildAutoChooser();
 	}
 
-	private void setDefaultCommand() {
-		this.swerveSubsystem.setDefaultCommand(this.swerveDriveCmd);
-		// this.intakeSubsystem.setDefaultCommand(this.intakeCmd);
-		// this.shooterSubsystem.setDefaultCommand(this.shooterCmd);0
-		this.shooterArmSubsystem.setDefaultCommand(this.shooterArmCmd);
-		// this.ampSubsystem.setDefaultCommand(this.ampCmd);
+	private void setDefaultCommands() {
+		this.swerveSubsystem.setDefaultCommand(new SwerveDriveCmd(swerveSubsystem, driverJoystick));
+		this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
+		this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
+		this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
+		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection));
+		this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
 	}
 
-	private void registerCommand() {
+	private void registerCommands() {
+		NamedCommands.registerCommand("AutoShoot", this.autoShoot());
+	}
+
+	private void configBindings() {
+		this.buttonStation.autoShoot().onTrue(
+			Commands.runOnce(this::autoShoot, this.shooterSubsystem, this.intakeSubsystem)
+		);
+	}
+
+	private Command autoShoot() {
+		return new ParallelCommandGroup(
+			Commands.runEnd(this.shooterSubsystem::autoExecute, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
+			Commands.runEnd(this.intakeSubsystem::releaseNote, this.intakeSubsystem::stopIntake, this.intakeSubsystem)
+		);
 	}
 
 	public Command getAutonomousCommand() {
@@ -84,5 +97,4 @@ public class RobotContainer implements IDashboardProvider {
 	public void putDashboardOnce() {
 		SmartDashboard.putData("PathChooser", this.autoCommandChooser);
 	}
-
 }

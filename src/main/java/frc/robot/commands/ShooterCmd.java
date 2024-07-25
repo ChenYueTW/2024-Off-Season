@@ -3,7 +3,6 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCmd extends Command {
@@ -21,7 +20,7 @@ public class ShooterCmd extends Command {
 
 	@Override
 	public void execute() {
-		if (this.isShoot.get()) this.shooterSubsystem.execute(ControllerConstants.SHOOTER_SPEED);
+		if (this.isShoot.get()) this.shooterSubsystem.execute();
 		else this.shooterSubsystem.stopShooter();
 	}
 
