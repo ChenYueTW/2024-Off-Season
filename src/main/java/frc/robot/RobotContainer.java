@@ -39,15 +39,15 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class RobotContainer implements IDashboardProvider {
 	private final Driver driverJoystick = new Driver(Driver.DRIVER_PORT);
 	private final Controller controllerJoystick = new Controller(Controller.CONTROLLER_PORT);
-	private final ButtonStation buttonStation = new ButtonStation(ButtonStation.BUTTON_STATION_PORT);
+	// private final ButtonStation buttonStation = new ButtonStation(ButtonStation.BUTTON_STATION_PORT);
 
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 	private final VisionSubsystem limelight = new VisionSubsystem();
-	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+	// private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
-	private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
-	private final AmpSubsystem ampSubsystem = new AmpSubsystem();
+	// private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+	// private final AmpSubsystem ampSubsystem = new AmpSubsystem();
 
 	private final SendableChooser<Command> autoCommandChooser;
 
@@ -62,29 +62,29 @@ public class RobotContainer implements IDashboardProvider {
 
 	private void setDefaultCommands() {
 		this.swerveSubsystem.setDefaultCommand(new SwerveDriveCmd(swerveSubsystem, driverJoystick));
-		this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
+		// this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
 		this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
 		this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
-		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection));
-		this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
+		// this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection));
+		// this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
 	}
 
 	private void registerCommands() {
-		NamedCommands.registerCommand("AutoShoot", this.autoShoot());
+		// NamedCommands.registerCommand("AutoShoot", this.autoShoot());
 	}
 
 	private void configBindings() {
-		this.buttonStation.autoShoot().onTrue(
-			Commands.runOnce(this::autoShoot, this.shooterSubsystem, this.intakeSubsystem)
-		);
+	// 	this.buttonStation.autoShoot().onTrue(
+	// 		Commands.runOnce(this::autoShoot, this.shooterSubsystem, this.intakeSubsystem)
+	// 	);
 	}
 
-	private Command autoShoot() {
-		return new ParallelCommandGroup(
-			Commands.runEnd(this.shooterSubsystem::autoExecute, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
-			Commands.runEnd(this.intakeSubsystem::releaseNote, this.intakeSubsystem::stopIntake, this.intakeSubsystem)
-		);
-	}
+	// private Command autoShoot() {
+	// 	return new ParallelCommandGroup(
+	// 		Commands.runEnd(this.shooterSubsystem::autoExecute, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
+	// 		Commands.runEnd(this.intakeSubsystem::releaseNote, this.intakeSubsystem::stopIntake, this.intakeSubsystem)
+	// 	);
+	// }
 
 	public Command getAutonomousCommand() {
 		return this.autoCommandChooser.getSelected();

@@ -24,6 +24,7 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
         this.leftPid = new PIDController(0.5, 0.25, 0.0003);
         this.rightPid = new PIDController(0.5, 0.28, 0.0003);
     }
+    
     public void execute() { // Rotation Per Second
         double leftSpeed = this.leftPid.calculate(
             this.leftShooter.getVelocity().getValue(), 85.0);

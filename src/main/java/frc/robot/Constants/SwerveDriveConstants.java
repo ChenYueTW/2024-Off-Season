@@ -5,8 +5,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public class SwerveDriveConstants {
 	public static final class SwerveConstants {
-		public static final double TRACK_WIDTH = 0.66;
-		public static final double WHEEL_BASE = 0.66;
+		public static final double TRACK_WIDTH = 0.61;
+		public static final double WHEEL_BASE = 0.61;
 		public static final double WHEEL_RADIUS = 0.0508;
 		
 		public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = 3.0;
@@ -16,7 +16,7 @@ public class SwerveDriveConstants {
 	}
 
 	public static final class ControllerConstants { // TODO
-		public static final double INTAKE_SPEED = 0.1;
+		public static final double INTAKE_SPEED = 0.3;
 		public static final double AMP_SPEED = 0.3;
 		public static final double ELEVATOR_ROT_UP_LIMIT = 0.0;
 		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;
