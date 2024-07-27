@@ -1,7 +1,8 @@
-package frc.robot.autonomousCmd;
+package frc.robot.autoCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AutoTrackNote;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -13,8 +14,6 @@ public class AutoCheckNoteCmd extends Command {
     public AutoCheckNoteCmd(SwerveSubsystem swerveSubsystem, VisionSubsystem limelight) {
         this.swerveSubsystem = swerveSubsystem;
         this.limelight = limelight;
-        // each subsystem used by the command must be passed into the
-        // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.swerveSubsystem);
     }
 
@@ -28,8 +27,9 @@ public class AutoCheckNoteCmd extends Command {
         if (DriverStation.isAutonomous()) {
             if (this.limelight.isNoteTarget()) {
                 while (true) {
-                    this.swerveSubsystem.driveSwerve(0.5, 0.0, 0.3, false);
-                    if (!this.limelight.isNoteTarget()) {
+                    this.swerveSubsystem.driveSwerve(0.0, 0.03, -0.3, false);
+                    if (this.limelight.isNoteTarget()) {
+                        new AutoTrackNote(swerveSubsystem,limelight);
                         break;
                     }
                 }
@@ -41,7 +41,6 @@ public class AutoCheckNoteCmd extends Command {
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
         return false;
     }
 

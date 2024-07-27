@@ -16,7 +16,7 @@ public class SwerveDriveConstants {
 	}
 
 	public static final class ControllerConstants { // TODO
-		public static final double INTAKE_SPEED = 0.3;
+		public static final double INTAKE_SPEED = 0.4;
 		public static final double AMP_SPEED = 0.3;
 		public static final double ELEVATOR_ROT_UP_LIMIT = 0.0;
 		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;

@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NotePoseEstimator {
     private static final double TOLERANCE = 0.125;
-    private static final Vector3D CAMERA_POSE = new Vector3D(-0.25, -0.225, 0.459);
-    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.88, 0.03, -0.46);
-    private static final Vector3D CAM_X_AXIS = new Vector3D(0.03, -0.88, 0);
-    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.4, 0.01, 0.77);
+    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, -0.307552, 0.568998);
+    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, -0.30846, -0.177648);
+    private static final Vector3D CAM_X_AXIS = new Vector3D(-0.31, 0.0, 0.0);
+    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, -0.05, 0.1);
     private static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 0.1), TOLERANCE);
 
     public static Translation2d getPositionVector(double tx, double ty) {
@@ -28,9 +28,6 @@ public class NotePoseEstimator {
         Vector2D targetXY = new Vector2D(intersect.getX(), intersect.getY());
 
         if (targetXY.getNorm() == 0) return new Translation2d(0.0, 0.0);
-        SmartDashboard.putNumberArray("xVec", xVector.toArray());
-        SmartDashboard.putNumberArray("yVec", yVector.toArray());
-        SmartDashboard.putNumberArray("intersect", intersect.toArray());
         // targetXY.scalarMultiply((targetXY.getNorm() - 0.415) / targetXY.getNorm());
         return new Translation2d(targetXY.getX(), targetXY.getY());
     }

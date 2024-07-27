@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.lib.limelight.AprilTagField;
 
 public class AprilTagPoseEstimator {
-    private static final double TOLERANCE = 0.0001;
-    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, 0.2633, 0.5954);
-    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, -1.66, 0.98);
-    private static final Vector3D CAM_X_AXIS = new Vector3D(1.66, 0.0, 0.0);
-    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, 1.63, 2.76);
+    private static final double TOLERANCE = 0.012;
+    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, 0.262909, 0.6415148);
+    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, 0.880132, 0.507567);
+    private static final Vector3D CAM_X_AXIS = new Vector3D(-0.88, 0.0, 0.0);
+    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, -0.45, 0.77);
 
     @SuppressWarnings("deprecation")
     private static Plane getAprilTagPlane(int id) {
@@ -28,7 +28,7 @@ public class AprilTagPoseEstimator {
         if (id == -1) return new Translation3d(0.0, 0.0, 0.0);
         Plane aprilTagPlane = AprilTagPoseEstimator.getAprilTagPlane(id);
 
-        Rotation xRot = new Rotation(CAM_Y_AXIS, -Units.degreesToRadians(tx), RotationConvention.VECTOR_OPERATOR);
+        Rotation xRot = new Rotation(CAM_Y_AXIS, Units.degreesToRadians(tx), RotationConvention.VECTOR_OPERATOR);
         Rotation yRot = new Rotation(CAM_X_AXIS, -Units.degreesToRadians(ty), RotationConvention.VECTOR_OPERATOR);
         Vector3D xVector = xRot.applyTo(CENTRAL_SIGHT);
         Vector3D yVector = yRot.applyTo(CENTRAL_SIGHT);
