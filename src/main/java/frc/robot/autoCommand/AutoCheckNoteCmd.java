@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.AutoTrackNote;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.commands.AutoTrackNote;
 
 
 public class AutoCheckNoteCmd extends Command {
@@ -25,9 +26,13 @@ public class AutoCheckNoteCmd extends Command {
     @Override
     public void execute() {
         if (DriverStation.isAutonomous()) {
-            if (this.limelight.isNoteTarget()) {
+            if (!this.limelight.isNoteTarget()) {
                 while (true) {
+<<<<<<< HEAD
                     this.swerveSubsystem.driveSwerve(0.0, 0.03, -0.3, false);
+=======
+                    this.swerveSubsystem.driveSwerve(0.0, 0.3, -0.3, false);
+>>>>>>> 761d60d80fe537127064f23c93a7b75ff0d84077
                     if (this.limelight.isNoteTarget()) {
                         new AutoTrackNote(swerveSubsystem,limelight);
                         break;
