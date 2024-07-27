@@ -15,10 +15,7 @@ import frc.robot.commands.IntakeCmd;
 import frc.robot.commands.ShooterArmCmd;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.SwerveDriveCmd;
-<<<<<<< HEAD
-=======
 import frc.robot.autoCommand.AutoCheckNoteCmd;
->>>>>>> 761d60d80fe537127064f23c93a7b75ff0d84077
 import frc.robot.joystick.ButtonStation;
 import frc.robot.joystick.Controller;
 import frc.robot.joystick.Driver;
