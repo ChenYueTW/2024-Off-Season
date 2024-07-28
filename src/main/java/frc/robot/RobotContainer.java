@@ -38,7 +38,7 @@ public class RobotContainer implements IDashboardProvider {
 	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	// private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	// private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
-	// private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+	private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 	// private final AmpSubsystem ampSubsystem = new AmpSubsystem();
 
 	private final SendableChooser<Command> autoCommandChooser;
@@ -53,11 +53,11 @@ public class RobotContainer implements IDashboardProvider {
 	}
 
 	private void setDefaultCommands() {
-		this.swerveSubsystem.setDefaultCommand(new SwerveDriveCmd(swerveSubsystem, driverJoystick));
+		this.swerveSubsystem.setDefaultCommand(new SwerveDriveCmd(swerveSubsystem, driverJoystick::getDesiredXSpeed, driverJoystick::getDesiredYSpeed, driverJoystick::getDesiredRotationSpeed));
 		this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
 		// this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
 		// this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
-		// this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection));
+		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection));
 		// this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
 	}
 

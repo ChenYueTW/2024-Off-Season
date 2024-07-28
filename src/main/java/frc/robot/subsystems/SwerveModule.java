@@ -80,7 +80,7 @@ public class SwerveModule implements IDashboardProvider {
             return;
         }
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, this.getState().angle);
-        double speedMetersPerSecond = MathHelper.applyMax(state.speedMetersPerSecond, SwerveConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND);
+        double speedMetersPerSecond = MathHelper.applyMax(state.speedMetersPerSecond, SwerveConstants.MAX_SPEED);
 
         this.driveOutput = this.drivePidController.calculate(
             this.getState().speedMetersPerSecond, speedMetersPerSecond
