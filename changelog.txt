@@ -51,3 +51,7 @@
 2024/7/28 v1.6.1
 - Optimized Swerve max acceleration speed and max acceleration angular speed
 - Limit Joystick acceleration
+
+2024/7/28 v1.6.2
+- Added auto aim speaker and auto rotation to speaker
+- Improved the accuracy of detecting notes

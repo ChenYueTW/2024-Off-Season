@@ -38,8 +38,8 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
     @Override
     public void putDashboard() {
         SmartDashboard.putNumber("Note Distance", this.getNoteGroundDistance());
-        SmartDashboard.putNumber("AprilTagX", this.getAprilTagVector().getX());
-        SmartDashboard.putNumber("AprilTagY", this.getAprilTagVector().getY());
+        SmartDashboard.putNumber("AprilTagX", this.getNotePositionVector().getX());
+        SmartDashboard.putNumber("AprilTagY", this.getNotePositionVector().getY());
         SmartDashboard.putNumber("AprilTagZ", this.getAprilTagVector().getZ());
     }
 

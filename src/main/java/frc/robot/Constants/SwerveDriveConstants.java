@@ -22,8 +22,8 @@ public class SwerveDriveConstants {
 		public static final double AMP_SPEED = 0.3;
 		public static final double ELEVATOR_ROT_UP_LIMIT = 10.0;
 		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;
-		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 238.76669396916733;
-		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 71.62473779061845;
+		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 267.65505669137644;
+		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 15.803775395094384;
 	}
 
 	public static final class EncoderOffset {

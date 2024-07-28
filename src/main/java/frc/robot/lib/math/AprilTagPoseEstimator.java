@@ -4,10 +4,12 @@ import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.RotationConvention;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.lib.limelight.AprilTagField;
 
 public class AprilTagPoseEstimator {
@@ -37,5 +39,18 @@ public class AprilTagPoseEstimator {
         Vector3D intersect = Plane.intersection(xPlane, yPlane, aprilTagPlane);
 
         return new Translation3d(intersect.getX(), intersect.getY(), intersect.getZ());
+    }
+
+    public static Rotation2d getAprilTagRotation(Translation3d aprilTagPose) {
+        Vector2D handingVec = new Vector2D(0.0, 1.0);
+        Vector2D apriltagVec = new Vector2D(aprilTagPose.getX(), aprilTagPose.getY());
+        
+        double goalRadians = Math.acos(handingVec.getNorm() / apriltagVec.getNorm());
+        return new Rotation2d(Units.radiansToDegrees(goalRadians));
+    }
+
+    public static double getAprilTagDegrees(Translation3d aprilTagPose) {
+        double goalRadian = Math.atan(aprilTagPose.getY() / aprilTagPose.getZ());
+        return Units.radiansToDegrees(goalRadian) + ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT;
     }
 }
