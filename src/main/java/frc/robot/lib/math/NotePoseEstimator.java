@@ -8,7 +8,6 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NotePoseEstimator {
     private static final double TOLERANCE = 0.125;

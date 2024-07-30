@@ -3,6 +3,7 @@ package frc.robot.joystick;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.constants.SwerveDriveConstants;
 import frc.robot.constants.SwerveDriveConstants.SwerveConstants;
 
@@ -27,8 +28,11 @@ public class Driver extends XboxController {
     }
 
     public double getDesiredRotationSpeed() {
-        double speed = MathUtil.applyDeadband(this.getRightX(), SwerveDriveConstants.DEAD_BAND);
+        double speed = -MathUtil.applyDeadband(this.getRightX(), SwerveDriveConstants.DEAD_BAND);
         return this.rotationSpeed.calculate(speed * SwerveConstants.MAX_ANGULAR_SPEED);
     }
 
+    public Trigger autoTurn() {
+        return new Trigger(this::getAButton);
+    }
 }

@@ -37,12 +37,10 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SwerveModule backRight;
     private final AHRS gyro;
     private static SwerveDriveOdometry odometry;
-    private final PIDController drivePIDController = new PIDController(
-            3.0, 0.0, 0.0,0.01); // TODO re-tune PID
-    private final PIDController steerPIDController = new PIDController(
-            2.5, 0.08, 0.0,0.01); // TODO re-tune PID
-    private final PIDController noteSteerPIDController = new PIDController(
-            2.0, 0.08, 0.0,0.01);
+    private final PIDController drivePIDController = new PIDController(3.0, 0.0, 0.0,0.01); // TODO LIST
+    private final PIDController steerPIDController = new PIDController(2.5, 0.08, 0.0,0.01); // TODO LIST
+    private final PIDController noteSteerPIDController = new PIDController(2.0, 0.08, 0.0,0.01); // TODO LIST
+    private final PIDController rotationPid = new PIDController(0.1, 0.0, 0.0); // TODO LIST
     private final Field2d field = new Field2d();
 
     public SwerveSubsystem() {
@@ -141,6 +139,12 @@ public class SwerveSubsystem extends SubsystemBase {
                 * ((Robot.isBlueAlliance() || !fieldOriented) ? 1.0 : -1.0));
 
         this.driveSwerve(xSpeed, ySpeed, rotation, fieldOriented);
+    }
+
+    public void autoTurnRobot(double goalDegrees) {
+        double speed = this.rotationPid.calculate(this.getRotation().getDegrees(), goalDegrees);
+        speed = MathHelper.applyMax(speed, SwerveConstants.MAX_ANGULAR_SPEED);
+        this.driveSwerve(0.0, 0.0, speed, true);
     }
 
     public void autoDrive(ChassisSpeeds relativeSpeed) {

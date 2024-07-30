@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.AutoTrackNote;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import frc.robot.commands.AutoTrackNote;
-
 
 public class AutoCheckNoteCmd extends Command {
     private final SwerveSubsystem swerveSubsystem;

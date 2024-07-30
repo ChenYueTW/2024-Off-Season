@@ -36,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
     }
 
     public boolean canShoot() {
-        return this.leftShooter.getVelocity().getValue() >= 75.0 && this.rightShooter.getVelocity().getValue() >= 60.0;
+        return this.leftShooter.getVelocity().getValue() >= 80.0 && this.rightShooter.getVelocity().getValue() >= 60.0;
     }
 
     public Command autoExecute() {

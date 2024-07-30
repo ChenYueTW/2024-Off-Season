@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.lib.helpers.IDashboardProvider;
@@ -22,6 +23,34 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
         return NotePoseEstimator.getPositionVector(this.noteCam.getTx(), this.noteCam.getTy());
     }
 
+    public double getGoalRotationDeg() {
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red && 
+        this.aprilTagCam.getAprilTagId() == 3 && 
+        this.aprilTagCam.getAprilTagId() == 4
+        ) {
+            return AprilTagPoseEstimator.getAprilTagRotation(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId())).getDegrees();
+        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue && 
+        this.aprilTagCam.getAprilTagId() == 7 && 
+        this.aprilTagCam.getAprilTagId() == 8
+        ) {
+            return AprilTagPoseEstimator.getAprilTagRotation(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId())).getDegrees();
+        } else return 0.0;
+    }
+
+    public double getGoalArmDeg() {
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red && 
+        this.aprilTagCam.getAprilTagId() == 3 ||
+        this.aprilTagCam.getAprilTagId() == 4
+        ) {
+            return AprilTagPoseEstimator.getAprilTagDegrees(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()));
+        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue && 
+        this.aprilTagCam.getAprilTagId() == 7 ||
+        this.aprilTagCam.getAprilTagId() == 8
+        ) {
+            return AprilTagPoseEstimator.getAprilTagDegrees(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()));
+        } else return 0.0;
+    }
+
     public double getNoteGroundDistance() {
         return !this.noteCam.isNoteTarget() ? -1.0 : this.getNotePositionVector().getNorm();
     }
@@ -38,9 +67,9 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
     @Override
     public void putDashboard() {
         SmartDashboard.putNumber("Note Distance", this.getNoteGroundDistance());
-        SmartDashboard.putNumber("AprilTagX", this.getNotePositionVector().getX());
-        SmartDashboard.putNumber("AprilTagY", this.getNotePositionVector().getY());
-        SmartDashboard.putNumber("AprilTagZ", this.getAprilTagVector().getZ());
+        SmartDashboard.putNumber("AprilTag", this.aprilTagCam.getAprilTagId());
+        SmartDashboard.putNumber("AprilTagArmDeg", this.getGoalArmDeg());
+        SmartDashboard.putNumber("AprilTagRotDeg", this.getGoalRotationDeg());
     }
 
     @Override

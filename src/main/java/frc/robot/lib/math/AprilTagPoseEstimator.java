@@ -9,15 +9,14 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.lib.limelight.AprilTagField;
 
 public class AprilTagPoseEstimator {
     private static final double TOLERANCE = 0.012;
     private static final Vector3D CAMERA_POSE = new Vector3D(0.0, 0.262909, 0.6415148);
-    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, 0.880132, 0.507567);
-    private static final Vector3D CAM_X_AXIS = new Vector3D(-0.88, 0.0, 0.0);
-    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, -0.45, 0.77);
+    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, -0.880132, 0.507567);
+    private static final Vector3D CAM_X_AXIS = new Vector3D(0.88, 0.0, 0.0);
+    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, 0.45, 0.77);
 
     @SuppressWarnings("deprecation")
     private static Plane getAprilTagPlane(int id) {
@@ -49,8 +48,15 @@ public class AprilTagPoseEstimator {
         return new Rotation2d(Units.radiansToDegrees(goalRadians));
     }
 
+    private static double function(double x) {
+        double k = 0.000543599;
+        double h = 173.632;
+
+        return Math.atan((k * x * x + 2 * h) / (x * (1 + Math.sqrt(1 - 2 * k * h - k * k * x * x))));
+    }
+
     public static double getAprilTagDegrees(Translation3d aprilTagPose) {
-        double goalRadian = Math.atan(aprilTagPose.getY() / aprilTagPose.getZ());
-        return Units.radiansToDegrees(goalRadian) + ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT;
+        double x0 = 17.8675;
+        return 720.0 / Math.PI * function(aprilTagPose.getY() + x0) + 15.0;
     }
 }

@@ -7,10 +7,12 @@ import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ElevatorCmd extends Command {
 	private final ElevatorSubsystem elevatorSubsystem;
-	private final Supplier<Double> adjustmentHeight; 
-	public ElevatorCmd(ElevatorSubsystem elevatorSubsystem, Supplier<Double> adjustmentHeight) {
+	private final Supplier<Double> adjustmentHeight;
+	private final Supplier<Boolean> a; 
+	public ElevatorCmd(ElevatorSubsystem elevatorSubsystem, Supplier<Double> adjustmentHeight, Supplier<Boolean> a) {
 		this.elevatorSubsystem = elevatorSubsystem;
 		this.adjustmentHeight = adjustmentHeight;
+		this.a = a;
 		addRequirements(this.elevatorSubsystem);
 	}
 
@@ -19,7 +21,9 @@ public class ElevatorCmd extends Command {
 
 	@Override
 	public void execute() {
-		this.elevatorSubsystem.execute(this.adjustmentHeight.get());
+		if (this.a.get()) {
+			this.elevatorSubsystem.decline();
+		} else this.elevatorSubsystem.execute(this.adjustmentHeight.get());
 	}
 
 	@Override

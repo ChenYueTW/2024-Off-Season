@@ -16,7 +16,8 @@ public class ElevatorSubsystem extends SubsystemBase implements IDashboardProvid
     public ElevatorSubsystem() {
         this.registerDashboard();
         this.elevator = new ModuleTalon(Controller.elevator.get(), true, true);
-        this.heightAdjustmentPid = new PIDController(0.0, 0.0, 0.0);
+        this.heightAdjustmentPid = new PIDController(0.1, 0.0, 0.0); // TODO LIST
+        this.elevator.setPosition(0.0);
     }
 
     public double getPosition() {
@@ -25,7 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase implements IDashboardProvid
 
     public void decline() {
         double speed = this.heightAdjustmentPid.calculate(this.elevator.getPosition().getValue(), ControllerConstants.ELEVATOR_ROT_UP_LIMIT);
-        this.execute(speed);
+        this.execute(-speed);
     }
 
     public void rise() {
@@ -34,15 +35,16 @@ public class ElevatorSubsystem extends SubsystemBase implements IDashboardProvid
     }
 
     public void execute(double speed) {
-        if (this.elevator.getPosition().getValue() < ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT && speed > 0) {
-            this.elevator.set(speed);
-        } else if (this.elevator.getPosition().getValue() > ControllerConstants.ELEVATOR_ROT_UP_LIMIT && speed < 0) {
-            this.elevator.set(speed);
+        if (this.elevator.getPosition().getValue() < ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT && speed < 0) {
+            this.elevator.set(-speed);
+        } else if (this.elevator.getPosition().getValue() > ControllerConstants.ELEVATOR_ROT_UP_LIMIT && speed > 0) {
+            this.elevator.set(-speed);
         } else if (this.elevator.getPosition().getValue() >= ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT && this.elevator.getPosition().getValue() <= ControllerConstants.ELEVATOR_ROT_UP_LIMIT) {
-            this.elevator.set(speed);
+            this.elevator.set(-speed);
         } else {
             this.elevator.stopMotor();
         }
+        // this.elevator.set(-speed);
     }
 
     public void stopElevator() {
