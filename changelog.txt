@@ -53,12 +53,15 @@
 - Limit Joystick acceleration
 
 2024/7/28 v1.6.2
-- Added auto aim speaker and auto rotation to speaker
+- Added auto aim speaker and autorotation to speaker
 - Improved the accuracy of detecting notes
 
-2021/7/30 v1.7
+2024/7/30 v1.7
 - Added all auto shoot command
 - Added auto Turnging command
 - Added elevator PID
 - Added getGoalArmDeg, getGoalRotationDeg
 - Changed caculate shoot arm degrees method
+
+2024/7/31 v1.7.1
+-Add SequentialCommandGroup and ParallelDeadlineGroup in name cmd to call AutoCheckNoteCmd.
