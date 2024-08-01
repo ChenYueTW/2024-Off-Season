@@ -37,7 +37,7 @@ public class RobotContainer implements IDashboardProvider {
 
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 	private final VisionSubsystem limelight = new VisionSubsystem();
-	// private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+	   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	// private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	// private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
 	private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
@@ -56,7 +56,7 @@ public class RobotContainer implements IDashboardProvider {
 
 	private void setDefaultCommands() {
 		this.swerveSubsystem.setDefaultCommand(new SwerveDriveCmd(swerveSubsystem, driverJoystick::getDesiredXSpeed, driverJoystick::getDesiredYSpeed, driverJoystick::getDesiredRotationSpeed));
-		// this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
+		   this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
 		// this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
 		// this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, limelight, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
 		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection, controllerJoystick::getRightBumper));
