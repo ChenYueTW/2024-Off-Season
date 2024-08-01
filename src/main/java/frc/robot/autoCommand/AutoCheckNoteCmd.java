@@ -26,7 +26,7 @@ public class AutoCheckNoteCmd extends Command {
         if (DriverStation.isAutonomous()) {
             if (!this.limelight.isNoteTarget()) {
                 while (true) {
-                    this.swerveSubsystem.driveSwerve(0.0, 0.3, -0.3, false);
+                    this.swerveSubsystem.driveSwerve(0.0, 0.0, -0.3, false);
                     if (this.limelight.isNoteTarget()) {
                         new AutoTrackNote(swerveSubsystem,limelight);
                         break;
