@@ -9,6 +9,8 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.lib.limelight.AprilTagField;
 
 public class AprilTagPoseEstimator {
@@ -57,6 +59,6 @@ public class AprilTagPoseEstimator {
 
     public static double getAprilTagDegrees(Translation3d aprilTagPose) {
         double x0 = 17.8675;
-        return 720.0 / Math.PI * function(aprilTagPose.getY() + x0) + 15.0;
+        return (720.0 / Math.PI) * function((Math.abs(aprilTagPose.getY()) - 0.33) * 100.0 + x0) + 15.0;
     }
 }

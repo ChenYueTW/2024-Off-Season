@@ -20,10 +20,11 @@ public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProv
         this.registerDashboard();
         this.shooterArm = new ModuleTalon(Controller.shooterArm.get(), false, true);
         this.encoder = new DutyCycleEncoder(Encoder.shooterArm.get());
-        this.angleAdjustmentPid = new PIDController(0.1, 0.0, 0.0); // TODO LIST
+        this.angleAdjustmentPid = new PIDController(0.15, 0.0, 0.0); // TODO LIST
     }
 
     public void toGoalDegrees(double degrees) {
+        if (degrees == 0) return;
         double speed = this.angleAdjustmentPid.calculate(this.getPosition(), degrees);
         this.execute(-speed);
     }

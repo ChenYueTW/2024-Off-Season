@@ -27,9 +27,6 @@ import frc.robot.subsystems.ShooterArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-import java.util.Timer;
-import java.util.concurrent.Delayed;
-
 public class RobotContainer implements IDashboardProvider {
 	private final Driver driverJoystick = new Driver(Driver.DRIVER_PORT);
 	private final Controller controllerJoystick = new Controller(Controller.CONTROLLER_PORT);
@@ -40,8 +37,6 @@ public class RobotContainer implements IDashboardProvider {
 	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
-	// private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-	// private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
 	private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 	private final AmpSubsystem ampSubsystem = new AmpSubsystem();
 
@@ -61,14 +56,13 @@ public class RobotContainer implements IDashboardProvider {
 		this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
 		this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
 		this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, limelight, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
-		// this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
-		// this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, limelight, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
 		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection, controllerJoystick::getRightBumper));
 		this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
 	}
 
 	private void registerCommands() {
 		NamedCommands.registerCommand("AutoShoot", this.autoShoot());
+		NamedCommands.registerCommand("RealseIntake", this.intakeSubsystem.releaseNote());
 		NamedCommands.registerCommand("AutoCheckNotes", new SequentialCommandGroup(
 			new ParallelDeadlineGroup(
 				new WaitCommand(3.0),
