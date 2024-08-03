@@ -68,3 +68,11 @@
 
 2024/8/2 v1.7.2
 -Add NEO conveyorBelt to IntakeSubsystem.
+
+2024/8/3 v1.8
+- Added driver joystick brake
+- Added auto amp command
+- Fixed getAprilTagRotation xy error
+- Optimized elevator pid
+- Optimized swerve drive pid
+- Optimized shooter arm pid

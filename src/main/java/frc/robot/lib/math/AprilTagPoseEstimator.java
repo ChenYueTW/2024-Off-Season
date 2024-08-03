@@ -15,21 +15,15 @@ import frc.robot.lib.limelight.AprilTagField;
 
 public class AprilTagPoseEstimator {
     private static final double TOLERANCE = 0.012;
-    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, 0.262909, 0.6415148);
-    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, -0.880132, 0.507567);
-    private static final Vector3D CAM_X_AXIS = new Vector3D(0.88, 0.0, 0.0);
-    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, 0.45, 0.77);
+    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, 0.26536, 0.640126);
+    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, -0.603625, 0.197135);
+    private static final Vector3D CAM_X_AXIS = new Vector3D(0.6, 0.0, 0.0);
+    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, 0.12, 0.36);
 
     @SuppressWarnings("deprecation")
-    private static Plane getAprilTagPlane(int id) {
-        Translation3d aprilTag = AprilTagField.get3dById(id);
-        
-        return new Plane(new Vector3D(0.0, 0.0, aprilTag.getZ()), new Vector3D(0.0, 0.0, 1.0));        
-    }
-
     public static Translation3d getAprilTagPose(double tx, double ty, int id) {
         if (id == -1) return new Translation3d(0.0, 0.0, 0.0);
-        Plane aprilTagPlane = AprilTagPoseEstimator.getAprilTagPlane(id);
+        Plane aprilTagPlane = new Plane(new Vector3D(0.0, 0.0, AprilTagField.get3dById(id).getZ()), new Vector3D(0.0, 0.0, 1.0));
 
         Rotation xRot = new Rotation(CAM_Y_AXIS, Units.degreesToRadians(tx), RotationConvention.VECTOR_OPERATOR);
         Rotation yRot = new Rotation(CAM_X_AXIS, -Units.degreesToRadians(ty), RotationConvention.VECTOR_OPERATOR);
@@ -42,11 +36,16 @@ public class AprilTagPoseEstimator {
         return new Translation3d(intersect.getX(), intersect.getY(), intersect.getZ());
     }
 
-    public static Rotation2d getAprilTagRotation(Translation3d aprilTagPose) {
-        Vector2D handingVec = new Vector2D(0.0, 1.0);
-        Vector2D apriltagVec = new Vector2D(aprilTagPose.getX(), aprilTagPose.getY());
+    public static Rotation2d getAprilTagRotation(Translation3d aprilTagPose,  double aprilTagId) {
+        if (aprilTagId == -1.0) return new Rotation2d(0.0);
+        double x;
+        if (aprilTagPose.getX() < 0.0 && aprilTagId == 3) x = -(Math.abs(aprilTagPose.getX()) + 0.55);
+        else if (aprilTagPose.getX() > 0.0 && aprilTagId == 3) x = aprilTagPose.getX() - 0.55;
+        else x = aprilTagPose.getX();
         
-        double goalRadians = Math.acos(handingVec.getNorm() / apriltagVec.getNorm());
+        Vector2D apriltagVec = new Vector2D(x, aprilTagPose.getY());
+        
+        double goalRadians = Math.acos(aprilTagPose.getY() / apriltagVec.getNorm());
         return new Rotation2d(Units.radiansToDegrees(goalRadians));
     }
 

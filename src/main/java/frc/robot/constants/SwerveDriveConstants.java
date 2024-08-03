@@ -12,15 +12,15 @@ public class SwerveDriveConstants {
 		public static final double TURN_GEAR_RATIO = 7.0 / 150.0;
 
 		public static final double MAX_SPEED = 3.0;
-		public static final double MAX_ANGULAR_SPEED = 2.0;
-		public static final double MAX_ACCELERATION_SPEED = 2.0;
+		public static final double MAX_ANGULAR_SPEED = 2.5;
+		public static final double MAX_ACCELERATION_SPEED = 2.5;
 		public static final double MAX_ACCELERATION_ANGULAR_SPEED = Math.PI;
 	}
 
 	public static final class ControllerConstants {
 		public static final double INTAKE_SPEED = 0.35;
 		public static final double AMP_SPEED = 0.3;
-		public static final double ELEVATOR_ROT_UP_LIMIT = 47.57421875;
+		public static final double ELEVATOR_ROT_UP_LIMIT = 54.57421875;
 		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;
 		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 267.65505669137644;
 		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 15.803775395094384;

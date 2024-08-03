@@ -23,7 +23,7 @@ public class IntakeSubsystem extends SubsystemBase implements IDashboardProvider
         this.registerDashboard();
         this.leftIntake = new ModuleTalon(Controller.leftIntake.get(), false, false);
         this.rightIntake = new ModuleTalon(Controller.rightIntake.get(), false, false);
-        this.conveyorBelt = new ModuleSpark(Controller.conveyorBelt.get(), false, false);
+        this.conveyorBelt = new ModuleSpark(Controller.conveyorBelt.get(), true, false);
     }
 
     public void execute(double speed) {
@@ -46,6 +46,7 @@ public class IntakeSubsystem extends SubsystemBase implements IDashboardProvider
     public void putDashboard() {
         SmartDashboard.putNumber("LeftIntake", this.leftIntake.getVelocity().getValue());
         SmartDashboard.putNumber("RightInakte", this.rightIntake.getVelocity().getValue());
+        SmartDashboard.putNumber("Convey", this.conveyorBelt.getEncoder().getVelocity() * 60.0);
     }
 
     @Override

@@ -29,6 +29,6 @@ public class VisionHelper {
     }
 
     public boolean isNoteTarget() {
-        return this.tv.get() != 0.0;
+        return this.tv.get() != -1.0;
     }
 }

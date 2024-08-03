@@ -22,7 +22,7 @@ public class DeviceId {
         shooterArm(13),
         leftShooter(14), rightShooter(15),
         leftIntake(16), rightIntake(17),
-        conveyorBelt(0),
+        conveyorBelt(20),
         elevator(18),
         amp(19);
 

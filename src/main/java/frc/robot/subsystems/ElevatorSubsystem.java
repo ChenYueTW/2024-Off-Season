@@ -16,7 +16,7 @@ public class ElevatorSubsystem extends SubsystemBase implements IDashboardProvid
     public ElevatorSubsystem() {
         this.registerDashboard();
         this.elevator = new ModuleTalon(Controller.elevator.get(), true, true);
-        this.heightAdjustmentPid = new PIDController(0.1, 0.0, 0.0); // TODO LIST
+        this.heightAdjustmentPid = new PIDController(0.1, 0.0, 0.0);
         this.elevator.setPosition(0.0);
     }
 

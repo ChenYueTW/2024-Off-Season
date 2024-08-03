@@ -25,15 +25,15 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
 
     public double getGoalRotationDeg() {
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red && 
-        this.aprilTagCam.getAprilTagId() == 3 && 
+        this.aprilTagCam.getAprilTagId() == 3 ||
         this.aprilTagCam.getAprilTagId() == 4
         ) {
-            return AprilTagPoseEstimator.getAprilTagRotation(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId())).getDegrees();
+            return AprilTagPoseEstimator.getAprilTagRotation(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()), this.aprilTagCam.getAprilTagId()).getDegrees();
         } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue && 
-        this.aprilTagCam.getAprilTagId() == 7 && 
+        this.aprilTagCam.getAprilTagId() == 7 ||
         this.aprilTagCam.getAprilTagId() == 8
         ) {
-            return AprilTagPoseEstimator.getAprilTagRotation(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId())).getDegrees();
+            return AprilTagPoseEstimator.getAprilTagRotation(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()), this.aprilTagCam.getAprilTagId()).getDegrees();
         } else return 0.0;
     }
 
@@ -67,6 +67,7 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
     @Override
     public void putDashboard() {
         SmartDashboard.putNumber("Note Distance", this.getNoteGroundDistance());
+        SmartDashboard.putBoolean("HasNote", this.isNoteTarget());
         SmartDashboard.putNumber("AprilTag", this.aprilTagCam.getAprilTagId());
         SmartDashboard.putNumber("AprilTagArmDeg", this.getGoalArmDeg());
         SmartDashboard.putNumber("AprilTagRotDeg", this.getGoalRotationDeg());

@@ -40,7 +40,7 @@ public class SwerveModule implements IDashboardProvider {
 
         this.turnEncoder = new CANcoder(turnEncoderPort);
 
-        this.drivePidController = new PIDController(0.15, 0.45, 0.0); // TODO LIST
+        this.drivePidController = new PIDController(0.01, 0.65, 0.0);
         this.turnPidController = new PIDController(0.009, 0.0, 0.0);
         this.turnPidController.enableContinuousInput(-180, 180);
 

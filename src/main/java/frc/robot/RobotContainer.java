@@ -27,9 +27,6 @@ import frc.robot.subsystems.ShooterArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-import java.util.Timer;
-import java.util.concurrent.Delayed;
-
 public class RobotContainer implements IDashboardProvider {
 	private final Driver driverJoystick = new Driver(Driver.DRIVER_PORT);
 	private final Controller controllerJoystick = new Controller(Controller.CONTROLLER_PORT);
@@ -37,11 +34,11 @@ public class RobotContainer implements IDashboardProvider {
 
 	private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 	private final VisionSubsystem limelight = new VisionSubsystem();
-	   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-	// private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-	// private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
+	private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+	private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	private final ShooterArmSubsystem shooterArmSubsystem = new ShooterArmSubsystem();
 	private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
-	// private final AmpSubsystem ampSubsystem = new AmpSubsystem();
+	private final AmpSubsystem ampSubsystem = new AmpSubsystem();
 
 	private final SendableChooser<Command> autoCommandChooser;
 
@@ -56,52 +53,79 @@ public class RobotContainer implements IDashboardProvider {
 
 	private void setDefaultCommands() {
 		this.swerveSubsystem.setDefaultCommand(new SwerveDriveCmd(swerveSubsystem, driverJoystick::getDesiredXSpeed, driverJoystick::getDesiredYSpeed, driverJoystick::getDesiredRotationSpeed));
-		   this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
-		// this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
-		// this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, limelight, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
-		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection, controllerJoystick::getRightBumper));
-		// this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
+		this.intakeSubsystem.setDefaultCommand(new IntakeCmd(intakeSubsystem, controllerJoystick::isIntake, controllerJoystick::isRelease));
+		this.shooterSubsystem.setDefaultCommand(new ShooterCmd(shooterSubsystem, controllerJoystick::isShoot));
+		this.shooterArmSubsystem.setDefaultCommand(new ShooterArmCmd(shooterArmSubsystem, limelight, controllerJoystick::getShooterDirection, controllerJoystick::autoAim));
+		this.elevatorSubsystem.setDefaultCommand(new ElevatorCmd(elevatorSubsystem, controllerJoystick::getElevatorDirection, driverJoystick::getXButton));
+		this.ampSubsystem.setDefaultCommand(new AmpCmd(ampSubsystem, controllerJoystick::isAmpInput, controllerJoystick::isAmpOutput));
 	}
 
 	private void registerCommands() {
-		// NamedCommands.registerCommand("AutoShoot", this.autoShoot());
-		NamedCommands.registerCommand("AutoCheckNotes", new SequentialCommandGroup(new ParallelDeadlineGroup(new WaitCommand(3.0),new AutoCheckNoteCmd(swerveSubsystem, limelight))));
+		NamedCommands.registerCommand("AutoShoot", this.autoShoot());
+		NamedCommands.registerCommand("AutoCheckNotes", new SequentialCommandGroup(new ParallelDeadlineGroup(new WaitCommand(3.0), new AutoCheckNoteCmd(swerveSubsystem, limelight))));
 	}
 
 	private void configBindings() {
 		this.driverJoystick.autoTurn().whileTrue(
 			new AutoTurning(swerveSubsystem, limelight)
 		);
+		this.driverJoystick.autoAmp().onTrue(
+			Commands.runEnd(this::autoAMP, this::stopAmp, this.ampSubsystem, this.elevatorSubsystem)
+		);
 		// this.buttonStation.autoShoot().onTrue(
 		// 	Commands.runOnce(this::autoShoot, this.shooterSubsystem, this.intakeSubsystem)
 		// );
 	}
 
-	// private Command autoShoot() {
-	// 	return new ParallelCommandGroup(
-	// 		Commands.runEnd(this.shooterSubsystem::autoExecute, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
-	// 		Commands.runEnd(this.intakeSubsystem::releaseNote, this.intakeSubsystem::stopIntake, this.intakeSubsystem)
-	// 	);
-	// }
+	private Command autoShoot() {
+		return new ParallelCommandGroup(
+			Commands.runEnd(this.shooterSubsystem::autoExecute, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
+			Commands.runEnd(this.intakeSubsystem::releaseNote, this.intakeSubsystem::stopIntake, this.intakeSubsystem)
+		);
+	}
 
-	// private Command allAutoShoot() {
-	// 	return new SequentialCommandGroup(
-	// 		new ParallelRaceGroup(
-	// 			new AutoTurning(swerveSubsystem, limelight),
-	// 			new WaitCommand(0.5)
-	// 		),
-	// 		new ParallelRaceGroup(
-	// 			Commands.runEnd(this::autoShoot, this::stopShoot, this.shooterSubsystem, this.shooterArmSubsystem, this.intakeSubsystem),
-	// 			new WaitCommand(1.5)
-	// 		)
-	// 	);
-	// }
+	private Command autoAMP() {
+		return new SequentialCommandGroup(
+			new ParallelRaceGroup(
+				Commands.runEnd(this.elevatorSubsystem::decline, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
+				new WaitCommand(0.8)
+			),
+			new WaitCommand(0.2),
+			new ParallelRaceGroup(
+				Commands.runEnd(this.ampSubsystem::execute, this.ampSubsystem::stopAmp, this.ampSubsystem),
+				new WaitCommand(0.7)
+			),
+			new WaitCommand(0.2),
+			new ParallelRaceGroup(
+				Commands.runEnd(this.elevatorSubsystem::rise, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
+				new WaitCommand(0.8)
+			)
+		);
+	}
 
-	// private void stopShoot() {
-	// 	this.shooterSubsystem.stopShooter();
-	// 	this.shooterArmSubsystem.stopShooterArm();
-	// 	this.intakeSubsystem.stopIntake();
-	// }
+	private Command allAutoShoot() {
+		return new SequentialCommandGroup(
+			new ParallelRaceGroup(
+				new AutoTurning(swerveSubsystem, limelight),
+				new WaitCommand(0.5)
+			),
+			new ParallelRaceGroup(
+				Commands.runEnd(this::autoShoot, this::stopShoot, this.shooterSubsystem, this.shooterArmSubsystem, this.intakeSubsystem),
+				new WaitCommand(1.5)
+			)
+		);
+	}
+
+	private void stopShoot() {
+		this.shooterSubsystem.stopShooter();
+		this.shooterArmSubsystem.stopShooterArm();
+		this.intakeSubsystem.stopIntake();
+	}
+
+	private void stopAmp() {
+		this.ampSubsystem.stopAmp();
+		this.elevatorSubsystem.stopElevator();
+	}
 
 	public Command getAutonomousCommand() {
 		return this.autoCommandChooser.getSelected();
