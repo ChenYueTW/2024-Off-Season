@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.lib.helpers.IDashboardProvider;
-import frc.robot.lib.motors.ModuleNEO;
+import frc.robot.lib.motors.ModuleSpark;
 import frc.robot.lib.motors.ModuleTalon;
 import com.revrobotics.CANSparkMax;
 
@@ -23,7 +23,7 @@ public class IntakeSubsystem extends SubsystemBase implements IDashboardProvider
         this.registerDashboard();
         this.leftIntake = new ModuleTalon(Controller.leftIntake.get(), false, false);
         this.rightIntake = new ModuleTalon(Controller.rightIntake.get(), false, false);
-        this.conveyorBelt = new ModuleNEO(Controller.conveyorBelt.get(), CANSparkLowLevel.MotorType.kBrushless);
+        this.conveyorBelt = new ModuleSpark(Controller.conveyorBelt.get(), false, false);
     }
 
     public void execute(double speed) {
