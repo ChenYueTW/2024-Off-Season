@@ -65,3 +65,6 @@
 
 2024/7/31 v1.7.1
 -Add SequentialCommandGroup and ParallelDeadlineGroup in name cmd to call AutoCheckNoteCmd.
+
+2024/8/2 v1.7.2
+-Add NEO conveyorBelt to IntakeSubsystem.
