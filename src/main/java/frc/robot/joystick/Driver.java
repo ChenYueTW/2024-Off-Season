@@ -32,15 +32,23 @@ public class Driver extends XboxController {
         return this.rotationSpeed.calculate(speed * SwerveConstants.MAX_ANGULAR_SPEED);
     }
 
+    public Trigger stopSwerve() {
+        return new Trigger(this::getLeftBumper);
+    }
+
     public double getBrake() {
         return 1.0 - (this.getRightTriggerAxis() * 0.8);
     }
 
-    public Trigger autoTurn() {
-        return new Trigger(this::getAButton);
+    public Trigger autoAmp() {
+        return new Trigger(this::getXButton);
     }
 
-    public Trigger autoAmp() {
+    public Trigger autoShoot() {
+        return new Trigger(this::getBButton);
+    }
+
+    public Trigger shooterToElevator() {
         return new Trigger(this::getXButton);
     }
 }

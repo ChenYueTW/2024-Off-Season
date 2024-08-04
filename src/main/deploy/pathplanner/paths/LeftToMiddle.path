@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4,
-        "y": 7.0
+        "x": 2.42,
+        "y": 6.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2594611570989525,
-        "y": 6.5136440244390466
+        "x": 2.329626083753592,
+        "y": 6.583808951093687
       },
       "isLocked": false,
       "linkedName": null
@@ -20,15 +20,21 @@
         "y": 5.546821904454621
       },
       "prevControl": {
-        "x": 2.084048840462353,
-        "y": 5.940630456759489
+        "x": 2.247767002656512,
+        "y": 5.83538306677753
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.55,
+      "rotationDegrees": 9.869668327488563,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,7 +51,7 @@
   "reversed": false,
   "folder": "Middle Alliance Line",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 13.236116803616055,
     "velocity": 0
   },
   "useDefaultConstraints": true

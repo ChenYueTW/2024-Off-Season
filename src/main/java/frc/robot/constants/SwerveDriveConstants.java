@@ -19,18 +19,19 @@ public class SwerveDriveConstants {
 
 	public static final class ControllerConstants {
 		public static final double INTAKE_SPEED = 0.35;
-		public static final double AMP_SPEED = 0.3;
+		public static final double AMP_SPEED = 0.4;
 		public static final double ELEVATOR_ROT_UP_LIMIT = 54.57421875;
 		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;
+		public static final double SHOOTER_TO_ELEVATOR = 0.0; // TODO
 		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 267.65505669137644;
 		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 15.803775395094384;
 	}
 
 	public static final class EncoderOffset {
-		public static final double FRONT_LEFT = 0.002685546875;
-		public static final double FRONT_RIGHT = -0.000732421875;
-		public static final double BACK_LEFT = 0.004150390625;
-		public static final double BACK_RIGHT = 0.00341796875;
+		public static final double FRONT_LEFT = 0.0;
+		public static final double FRONT_RIGHT = 0.0;
+		public static final double BACK_LEFT = 0.0;
+		public static final double BACK_RIGHT = 0.0;
 	}
 
 	public static final SwerveDriveKinematics swerveDriveKinematics = new SwerveDriveKinematics(

@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 0.76,
-      "y": 6.7
+      "y": 4.42
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -22,7 +22,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Narrow.LeftNote"
+                        "pathName": "Wide.RightNote"
                       }
                     },
                     {
@@ -34,7 +34,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "LeftToMiddle"
+                        "pathName": "RightToMiddle"
                       }
                     },
                     {
@@ -46,32 +46,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleToRight"
+                        "pathName": "MiddleToLeft"
                       }
                     },
                     {
                       "type": "wait",
                       "data": {
                         "waitTime": 0.2
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "AutoTurn"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
-                            }
-                          }
-                        ]
                       }
                     }
                   ]

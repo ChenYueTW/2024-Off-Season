@@ -76,3 +76,16 @@
 - Optimized elevator pid
 - Optimized swerve drive pid
 - Optimized shooter arm pid
+
+2024/8/4 v1.9
+- Added auto aim command
+- Added auto turn command
+- Added auto amp command
+- Added shooter to elevator command
+- Added getRobotField method
+- Fixed pathplanner path problem
+- Fixed swerve module cancoder get position offset
+- Fixed Cartesian coordinate conversion rotate bug
+- Increased elevator speed limit
+- Adjusted Swerve rotation pid
+- Deprecated the method of detecting Apriltag and targeting Speaker, use Pose2d to make Shooter aim at Speaker and turn here

@@ -29,6 +29,11 @@ public class ShooterArmSubsystem extends SubsystemBase implements IDashboardProv
         this.execute(-speed);
     }
 
+    public void toElevator() {
+        double speed = this.angleAdjustmentPid.calculate(this.getPosition(), ControllerConstants.SHOOTER_TO_ELEVATOR);
+        this.execute(-speed);
+    }
+
     public void execute(double speed) {
         if (this.getPosition() < ControllerConstants.SHOOTER_ARM_DEG_DOWN_LIMIT && speed < 0) {
             this.shooterArm.set(speed);

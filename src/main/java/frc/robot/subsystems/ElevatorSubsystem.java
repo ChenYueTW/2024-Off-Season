@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.lib.helpers.IDashboardProvider;
+import frc.robot.lib.math.MathHelper;
 import frc.robot.lib.motors.ModuleTalon;
 
 public class ElevatorSubsystem extends SubsystemBase implements IDashboardProvider {
@@ -26,12 +27,14 @@ public class ElevatorSubsystem extends SubsystemBase implements IDashboardProvid
 
     public void decline() {
         double speed = this.heightAdjustmentPid.calculate(this.elevator.getPosition().getValue(), ControllerConstants.ELEVATOR_ROT_UP_LIMIT);
+        speed = MathHelper.applyMax(speed, 0.8);
         this.execute(-speed);
     }
 
     public void rise() {
         double speed = this.heightAdjustmentPid.calculate(this.elevator.getPosition().getValue(), ControllerConstants.ELEVATOR_ROT_DOWN_LIMIT);
-        this.execute(speed);
+        speed = MathHelper.applyMax(speed, 0.8);
+        this.execute(-speed);
     }
 
     public void execute(double speed) {

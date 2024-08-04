@@ -4,9 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.lib.helpers.IDashboardProvider;
 import frc.robot.lib.motors.ModuleTalon;
@@ -40,10 +38,12 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
     }
 
     public Command autoExecute() {
-        return new ParallelRaceGroup(
-            new WaitCommand(1.3),
-            Commands.runEnd(this::execute, this::stopShooter, this)
-        );
+        return Commands.runEnd(this::execute, this::stopShooter, this);
+    }
+
+    public void toElevator() {
+        this.leftShooter.set(0.08);
+        this.rightShooter.set(0.08);
     }
 
     public void stopShooter() {

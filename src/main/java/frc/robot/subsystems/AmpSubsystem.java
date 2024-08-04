@@ -21,7 +21,7 @@ public class AmpSubsystem extends SubsystemBase {
     }
 
     public Command execute() {
-        return Commands.runEnd(() -> {this.execute(0.15);}, this::stopAmp, this);
+        return Commands.run(() -> {this.execute(0.2);}, this);
             
     }
 

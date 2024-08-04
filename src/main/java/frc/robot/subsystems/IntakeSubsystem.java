@@ -1,12 +1,9 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkLowLevel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.constants.DeviceId.Controller;
 import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
 import frc.robot.lib.helpers.IDashboardProvider;
@@ -28,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase implements IDashboardProvider
 
     public void execute(double speed) {
         this.leftIntake.set(speed);
-        this.rightIntake.set(speed);
+        this.rightIntake.set(speed + 0.1);
         this.conveyorBelt.set(speed);
     }
 

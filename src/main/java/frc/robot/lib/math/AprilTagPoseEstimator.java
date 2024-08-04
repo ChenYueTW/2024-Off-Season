@@ -4,14 +4,14 @@ import org.apache.commons.math3.geometry.euclidean.threed.Plane;
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.RotationConvention;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.constants.SwerveDriveConstants.ControllerConstants;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.lib.limelight.AprilTagField;
+import frc.robot.subsystems.SwerveSubsystem;
 
 public class AprilTagPoseEstimator {
     private static final double TOLERANCE = 0.012;
@@ -33,20 +33,30 @@ public class AprilTagPoseEstimator {
         Plane yPlane = new Plane(CAMERA_POSE, CAMERA_POSE.add(yVector), CAMERA_POSE.add(CAM_X_AXIS), TOLERANCE);
         Vector3D intersect = Plane.intersection(xPlane, yPlane, aprilTagPlane);
 
-        return new Translation3d(intersect.getX(), intersect.getY(), intersect.getZ());
+        // rotate 2d matrix
+        double theta = SwerveSubsystem.getRotation().getDegrees();
+        Vector3D rotatedVec = new Rotation(new Vector3D(0.0, 0.0, 1.0), -theta, RotationConvention.VECTOR_OPERATOR).applyTo(intersect);
+
+        return new Translation3d(rotatedVec.getX(), rotatedVec.getY(), intersect.getZ());
     }
 
-    public static Rotation2d getAprilTagRotation(Translation3d aprilTagPose,  double aprilTagId) {
-        if (aprilTagId == -1.0) return new Rotation2d(0.0);
-        double x;
-        if (aprilTagPose.getX() < 0.0 && aprilTagId == 3) x = -(Math.abs(aprilTagPose.getX()) + 0.55);
-        else if (aprilTagPose.getX() > 0.0 && aprilTagId == 3) x = aprilTagPose.getX() - 0.55;
-        else x = aprilTagPose.getX();
-        
-        Vector2D apriltagVec = new Vector2D(x, aprilTagPose.getY());
-        
-        double goalRadians = Math.acos(aprilTagPose.getY() / apriltagVec.getNorm());
-        return new Rotation2d(Units.radiansToDegrees(goalRadians));
+    public static Translation2d getFiled(Translation3d apriltagPose, double id) {
+        if (id == -1) return new Translation2d(0.0, 0.0);
+        Translation2d apriltagFeild = AprilTagField.get2dById(id);
+        return new Translation2d(apriltagPose.getY() - apriltagFeild.getY(), apriltagPose.getX() - apriltagFeild.getX());
+    }
+
+    public static double getAprilTagRotation() {
+        Pose2d pose = SwerveSubsystem.getPose();
+        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            double y = 5.54 - pose.getY() > 0.0 ? 5.54 - pose.getY() : 5.54 - pose.getY();
+            double theta = Math.atan(y / Math.abs(16.56 - pose.getX()));
+            return Units.radiansToDegrees(theta);
+        } else {
+            double y =  5.54 - pose.getY() > 0.0 ? pose.getY() - 5.54 : pose.getY() - 5.54;
+            double theta = Math.atan(y / Math.abs(pose.getX()));
+            return Units.radiansToDegrees(theta);
+        }   
     }
 
     private static double function(double x) {
@@ -58,6 +68,7 @@ public class AprilTagPoseEstimator {
 
     public static double getAprilTagDegrees(Translation3d aprilTagPose) {
         double x0 = 17.8675;
-        return (720.0 / Math.PI) * function((Math.abs(aprilTagPose.getY()) - 0.33) * 100.0 + x0) + 15.0;
+        if (SwerveSubsystem.getPose().getX() == 0.0) return 0.0;
+        return (720.0 / Math.PI) * function((Math.abs(16.56 - SwerveSubsystem.getPose().getX()) - 0.33) * 100.0 + x0) + 15.0;
     }
 }
