@@ -11,10 +11,10 @@ import edu.wpi.first.math.util.Units;
 
 public class NotePoseEstimator {
     private static final double TOLERANCE = 0.125;
-    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, -0.307552, 0.568998);
-    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, -0.30846, -0.177648);
-    private static final Vector3D CAM_X_AXIS = new Vector3D(-0.31, 0.0, 0.0);
-    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, -0.05, 0.1);
+    private static final Vector3D CAMERA_POSE = new Vector3D(0.0, 0.326949, 0.565404);
+    private static final Vector3D CENTRAL_SIGHT = new Vector3D(0.0, 0.520162, -0.364221);
+    private static final Vector3D CAM_X_AXIS = new Vector3D(-0.52, 0.0, 0.0);
+    private static final Vector3D CAM_Y_AXIS = new Vector3D(0.0, 0.19, 0.27);
     private static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 0.1), TOLERANCE);
 
     public static Translation2d getPositionVector(double tx, double ty) {

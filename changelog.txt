@@ -89,3 +89,6 @@
 - Increased elevator speed limit
 - Adjusted Swerve rotation pid
 - Deprecated the method of detecting Apriltag and targeting Speaker, use Pose2d to make Shooter aim at Speaker and turn here
+
+2024/8/5 v1.9.1
+- Corrected NotePoseEstimator limelight pose and central sight vector
