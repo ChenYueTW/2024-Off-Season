@@ -92,3 +92,4 @@
 
 2024/8/5 v1.9.1
 - Corrected NotePoseEstimator limelight pose and central sight vector
+- Added Middle Note Auto path

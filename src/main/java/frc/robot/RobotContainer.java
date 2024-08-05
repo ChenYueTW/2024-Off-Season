@@ -116,12 +116,12 @@ public class RobotContainer implements IDashboardProvider {
 				Commands.runEnd(this.elevatorSubsystem::decline, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
 				new WaitCommand(0.8)
 			),
-			new WaitCommand(0.3),
+			new WaitCommand(0.2),
 			new ParallelRaceGroup(
 				Commands.runEnd(() -> {this.ampSubsystem.execute(0.4);}, this.ampSubsystem::stopAmp, this.ampSubsystem),
-				new WaitCommand(1.0)
+				new WaitCommand(0.4)
 			),
-			new WaitCommand(0.3),
+			new WaitCommand(0.2),
 			new ParallelRaceGroup(
 				Commands.runEnd(this.elevatorSubsystem::rise, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
 				new WaitCommand(0.8)

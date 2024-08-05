@@ -22,37 +22,43 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Wide.RightNote"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.2
+                        "pathName": "Middle Line 5"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "RightToMiddle"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.2
+                        "pathName": "Middle 5 to Shoot"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "MiddleToLeft"
+                        "pathName": "Middle 4 5 Point"
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "path",
                       "data": {
-                        "waitTime": 0.2
+                        "pathName": "Middle 4 for stage"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "4 Stage to Middle 3"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Middle 3 to 3 Stage"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3 Stage Middle 2"
                       }
                     }
                   ]

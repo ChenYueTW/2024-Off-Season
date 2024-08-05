@@ -49,6 +49,6 @@ public class Driver extends XboxController {
     }
 
     public Trigger shooterToElevator() {
-        return new Trigger(this::getXButton);
+        return new Trigger(this::getAButton);
     }
 }
