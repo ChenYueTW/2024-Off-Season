@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -80,12 +81,12 @@ public class SwerveSubsystem extends SubsystemBase {
             EncoderOffset.BACK_RIGHT,
             "backRight"
         );
-        gyro = new AHRS(SPI.Port.kMXP);
+        gyro = new AHRS(SerialPort.Port.kMXP);
         odometry = new SwerveDriveOdometry(
-            SwerveDriveConstants.swerveDriveKinematics, this.gyro.getRotation2d(), this.getModulePosition()
+            SwerveDriveConstants.swerveDriveKinematics, gyro.getRotation2d(), this.getModulePosition()
         );
         this.wait(1000);
-        this.gyro.reset();
+        gyro.reset();
 
         AutoBuilder.configureHolonomic(
             SwerveSubsystem::getPose, 

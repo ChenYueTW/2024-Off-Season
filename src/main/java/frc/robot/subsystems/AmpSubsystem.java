@@ -20,9 +20,8 @@ public class AmpSubsystem extends SubsystemBase {
         this.ampMotor.set(speed);
     }
 
-    public Command execute() {
-        return Commands.run(() -> {this.execute(0.2);}, this);
-            
+    public Command autoExecute() {
+        return Commands.runEnd(() -> {this.execute(0.2);}, this::stopAmp, this);
     }
 
     public void stopAmp() {

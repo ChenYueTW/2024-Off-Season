@@ -93,3 +93,7 @@
 2024/8/5 v1.9.1
 - Corrected NotePoseEstimator limelight pose and central sight vector
 - Added Middle Note Auto path
+
+2024/8/7 v2.0
+- Optimized auto amp command
+- Changed NavX2 gyro connect method

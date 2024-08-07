@@ -20,13 +20,13 @@ public class IntakeSubsystem extends SubsystemBase implements IDashboardProvider
         this.registerDashboard();
         this.leftIntake = new ModuleTalon(Controller.leftIntake.get(), false, false);
         this.rightIntake = new ModuleTalon(Controller.rightIntake.get(), false, false);
-        this.conveyorBelt = new ModuleSpark(Controller.conveyorBelt.get(), true, false);
+        this.conveyorBelt = new ModuleSpark(Controller.conveyorBelt.get(), false, false);
     }
 
     public void execute(double speed) {
         this.leftIntake.set(speed);
         this.rightIntake.set(speed + 0.1);
-        this.conveyorBelt.set(speed);
+        this.conveyorBelt.set(-speed);
     }
 
     public Command releaseNote() {

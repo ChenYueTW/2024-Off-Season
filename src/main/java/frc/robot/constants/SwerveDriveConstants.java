@@ -18,11 +18,11 @@ public class SwerveDriveConstants {
 	}
 
 	public static final class ControllerConstants {
-		public static final double INTAKE_SPEED = 0.35;
+		public static final double INTAKE_SPEED = 0.4;
 		public static final double AMP_SPEED = 0.2;
 		public static final double ELEVATOR_ROT_UP_LIMIT = 54.57421875;
 		public static final double ELEVATOR_ROT_DOWN_LIMIT = 0.0;
-		public static final double SHOOTER_TO_ELEVATOR = 0.0; // TODO
+		public static final double SHOOTER_TO_ELEVATOR = 52.33507330837683; // TODO
 		public static final double SHOOTER_ARM_DEG_UP_LIMIT = 267.65505669137644;
 		public static final double SHOOTER_ARM_DEG_DOWN_LIMIT = 15.803775395094384;
 	}

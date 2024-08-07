@@ -77,7 +77,7 @@ public class RobotContainer implements IDashboardProvider {
 			Commands.run(this.swerveSubsystem::stopModules, this.swerveSubsystem)
 		);
 		this.driverJoystick.shooterToElevator().onTrue(
-			Commands.runEnd(this::shooterToElevator, this::stopShooterToElevator, this.ampSubsystem, this.shooterSubsystem, this.shooterArmSubsystem)
+			Commands.runEnd(() -> {this.shooterToElevator().schedule();}, this::stopShooterToElevator, this.ampSubsystem, this.shooterSubsystem, this.shooterArmSubsystem)
 		);
 	}
 
@@ -138,11 +138,11 @@ public class RobotContainer implements IDashboardProvider {
 			new ParallelCommandGroup(
 				new ParallelRaceGroup(
 					Commands.runEnd(this.shooterSubsystem::toElevator, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
-					new WaitCommand(0.7)
+					new WaitCommand(0.4)
 				),
 				new ParallelRaceGroup(
-					Commands.runEnd(this.ampSubsystem::execute, this.ampSubsystem::stopAmp, this.ampSubsystem),
-					new WaitCommand(0.7)
+					Commands.runEnd(() -> {this.ampSubsystem.execute(0.2);}, this.ampSubsystem::stopAmp, this.ampSubsystem),
+					new WaitCommand(0.3)
 				)
 			)
 		);

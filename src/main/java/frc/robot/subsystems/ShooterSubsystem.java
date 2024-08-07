@@ -42,8 +42,8 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
     }
 
     public void toElevator() {
-        this.leftShooter.set(0.08);
-        this.rightShooter.set(0.08);
+        this.leftShooter.set(0.1);
+        this.rightShooter.set(0.1);
     }
 
     public void stopShooter() {
