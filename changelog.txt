@@ -97,3 +97,8 @@
 2024/8/7 v2.0
 - Optimized auto amp command
 - Changed NavX2 gyro connect method
+
+202487 v2.1
+- Fixed isNoteTarget judge error
+- Fixed NotePoseEstimator.getPositionVector ty minus 
+- Fixed NavX2 gyro reconnected error

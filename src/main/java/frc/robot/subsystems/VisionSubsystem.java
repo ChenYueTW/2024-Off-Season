@@ -40,7 +40,7 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
     }
 
     public double getNoteGroundDistance() {
-        return !this.noteCam.isNoteTarget() ? -1.0 : this.getNotePositionVector().getNorm();
+        return this.noteCam.isNoteTarget() ? this.getNotePositionVector().getNorm() : -1.0;
     }
 
     public Translation3d getAprilTagVector() {

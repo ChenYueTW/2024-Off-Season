@@ -8,6 +8,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NotePoseEstimator {
     private static final double TOLERANCE = 0.125;
@@ -18,7 +19,7 @@ public class NotePoseEstimator {
     private static final Plane GROUND = new Plane(new Vector3D(0.0, 0.0, 0.1), TOLERANCE);
 
     public static Translation2d getPositionVector(double tx, double ty) {
-        Rotation xRot = new Rotation(CAM_Y_AXIS, -Units.degreesToRadians(tx), RotationConvention.VECTOR_OPERATOR);
+        Rotation xRot = new Rotation(CAM_Y_AXIS, Units.degreesToRadians(tx), RotationConvention.VECTOR_OPERATOR);
         Rotation yRot = new Rotation(CAM_X_AXIS, Units.degreesToRadians(ty), RotationConvention.VECTOR_OPERATOR);
         Vector3D xVector = xRot.applyTo(CENTRAL_SIGHT);
         Vector3D yVector = yRot.applyTo(CENTRAL_SIGHT);
@@ -27,8 +28,10 @@ public class NotePoseEstimator {
         Vector3D intersect = Plane.intersection(xPlane, yPlane, GROUND);
         Vector2D targetXY = new Vector2D(intersect.getX(), intersect.getY());
 
-        if (targetXY.getNorm() == 0) return new Translation2d(0.0, 0.0);
-        targetXY.scalarMultiply((targetXY.getNorm() - 0.415) / targetXY.getNorm());
+        if (targetXY.getNorm() == 0.0) return new Translation2d(0.0, 0.0);
+        targetXY.scalarMultiply((targetXY.getNorm() - 0.35) / targetXY.getNorm());
+        SmartDashboard.putNumber("TX", targetXY.getX());
+        SmartDashboard.putNumber("TY", targetXY.getY());
         return new Translation2d(targetXY.getX(), targetXY.getY());
     }
 }
