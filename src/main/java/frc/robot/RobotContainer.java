@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.autoCommand.AutoCheckNoteCmd;
 import frc.robot.commands.AmpCmd;
+import frc.robot.commands.AutoTrackNote;
 import frc.robot.commands.AutoTurning;
 import frc.robot.commands.ElevatorCmd;
 import frc.robot.commands.IntakeCmd;
@@ -70,14 +71,17 @@ public class RobotContainer implements IDashboardProvider {
 		this.driverJoystick.autoAmp().onTrue(
 			Commands.runOnce(() -> {this.autoAMP().schedule();}, this.elevatorSubsystem, this.ampSubsystem)
 		);
-		this.driverJoystick.autoShoot().onTrue(
-			Commands.runOnce(this::allAutoShoot, this.shooterSubsystem, this.intakeSubsystem, this.shooterArmSubsystem)
+		this.driverJoystick.autoShoot().whileTrue(
+			new AutoTurning(swerveSubsystem, limelight)
 		);
 		this.driverJoystick.stopSwerve().whileTrue(
 			Commands.run(this.swerveSubsystem::stopModules, this.swerveSubsystem)
 		);
 		this.driverJoystick.shooterToElevator().onTrue(
 			Commands.runEnd(() -> {this.shooterToElevator().schedule();}, this::stopShooterToElevator, this.ampSubsystem, this.shooterSubsystem, this.shooterArmSubsystem)
+		);
+		this.driverJoystick.autoTrack().whileTrue(
+			new AutoTrackNote(swerveSubsystem, limelight)
 		);
 	}
 
@@ -138,7 +142,7 @@ public class RobotContainer implements IDashboardProvider {
 			new ParallelCommandGroup(
 				new ParallelRaceGroup(
 					Commands.runEnd(this.shooterSubsystem::toElevator, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
-					new WaitCommand(0.4)
+					new WaitCommand(0.45)
 				),
 				new ParallelRaceGroup(
 					Commands.runEnd(() -> {this.ampSubsystem.execute(0.2);}, this.ampSubsystem::stopAmp, this.ampSubsystem),

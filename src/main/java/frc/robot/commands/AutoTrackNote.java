@@ -20,7 +20,7 @@ public class AutoTrackNote extends Command {
 
 	@Override
 	public void execute() {
-		if (this.limelight.isNoteTarget() || this.limelight.getNotePositionVector() == null || this.limelight.getNoteGroundDistance() < 0.1) {
+		if (!this.limelight.isNoteTarget() || this.limelight.getNotePositionVector() == null || this.limelight.getNoteGroundDistance() < 0.1) {
 			this.swerveSubsystem.driveSwerve(0.0, 0.0, 0.0, false);
 			return;
 		}

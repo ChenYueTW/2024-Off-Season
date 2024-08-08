@@ -36,6 +36,10 @@ public class Driver extends XboxController {
         return new Trigger(this::getLeftBumper);
     }
 
+    public Trigger autoTrack() {
+        return new Trigger(this::getRightBumper);
+    }
+
     public double getBrake() {
         return 1.0 - (this.getRightTriggerAxis() * 0.8);
     }

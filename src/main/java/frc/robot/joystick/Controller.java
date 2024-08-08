@@ -27,11 +27,11 @@ public class Controller extends XboxController {
     }
 
     public boolean isAmpInput() {
-        return this.getXButton();
+        return this.getAButton();
     }
 
     public boolean isAmpOutput() {
-        return this.getAButton();
+        return this.getXButton();
     }
 
     public double getShooterDirection() {
