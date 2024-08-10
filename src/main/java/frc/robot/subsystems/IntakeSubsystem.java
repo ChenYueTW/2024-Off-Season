@@ -26,11 +26,15 @@ public class IntakeSubsystem extends SubsystemBase implements IDashboardProvider
     public void execute(double speed) {
         this.leftIntake.set(speed);
         this.rightIntake.set(speed + 0.1);
-        this.conveyorBelt.set(-speed);
+        this.conveyorBelt.set(-(speed + 0.2));
     }
 
     public Command releaseNote() {
         return Commands.runEnd(() -> {this.execute(ControllerConstants.INTAKE_SPEED);}, this::stopIntake, this);
+    }
+
+    public Command reloadNote() {
+        return Commands.runEnd(() -> {this.execute(-ControllerConstants.INTAKE_SPEED);}, this::stopIntake, this);
     }
 
     public void stopIntake() {

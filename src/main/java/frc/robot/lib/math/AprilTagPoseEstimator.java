@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.Robot;
 import frc.robot.lib.limelight.AprilTagField;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -69,6 +70,7 @@ public class AprilTagPoseEstimator {
     public static double getAprilTagDegrees(Translation3d aprilTagPose) {
         double x0 = 17.8675;
         if (SwerveSubsystem.getPose().getX() == 0.0) return 0.0;
-        return (720.0 / Math.PI) * function((Math.abs(16.56 - SwerveSubsystem.getPose().getX()) - 0.33) * 100.0 + x0) + 15.0;
+        double x = Robot.isBlueAlliance() ? SwerveSubsystem.getPose().getX() - 0.33 : 16.57 - SwerveSubsystem.getPose().getX() - 0.33;
+        return (720.0 / Math.PI) * function((Math.abs(x) * 100.0 + x0)) + 15.6;
     }
 }

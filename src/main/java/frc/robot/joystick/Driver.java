@@ -33,26 +33,30 @@ public class Driver extends XboxController {
     }
 
     public Trigger stopSwerve() {
-        return new Trigger(this::getLeftBumper);
-    }
-
-    public Trigger autoTrack() {
         return new Trigger(this::getRightBumper);
     }
 
+    public Trigger autoTrack() {
+        return new Trigger(this::getLeftBumper);
+    }
+
     public double getBrake() {
-        return 1.0 - (this.getRightTriggerAxis() * 0.8);
+        return 1.0 - (this.getRightTriggerAxis() * 1.0);
     }
 
     public Trigger autoAmp() {
         return new Trigger(this::getXButton);
     }
 
-    public Trigger autoShoot() {
+    public Trigger autoTurning() {
         return new Trigger(this::getBButton);
     }
 
     public Trigger shooterToElevator() {
         return new Trigger(this::getAButton);
+    }
+
+    public Trigger resetGyro() {
+        return new Trigger(this::getYButton);
     }
 }

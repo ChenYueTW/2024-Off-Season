@@ -2,6 +2,7 @@ package frc.robot.joystick;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.constants.SwerveDriveConstants;
 
 public class Controller extends XboxController {
@@ -32,6 +33,14 @@ public class Controller extends XboxController {
 
     public boolean isAmpOutput() {
         return this.getXButton();
+    }
+
+    public Trigger shootHigh() {
+        return new Trigger(this::getStartButton);
+    }
+
+    public Trigger autoShoot() {
+        return new Trigger(this::getBackButton);
     }
 
     public double getShooterDirection() {

@@ -32,11 +32,7 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
     }
 
     public double getGoalArmDeg() {
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            return AprilTagPoseEstimator.getAprilTagDegrees(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()));
-        } else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-            return AprilTagPoseEstimator.getAprilTagDegrees(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()));
-        } else return 0.0;
+        return AprilTagPoseEstimator.getAprilTagDegrees(AprilTagPoseEstimator.getAprilTagPose(this.aprilTagCam.getTx(), this.aprilTagCam.getTy(), this.aprilTagCam.getAprilTagId()));
     }
 
     public double getNoteGroundDistance() {
@@ -57,10 +53,10 @@ public class VisionSubsystem extends SubsystemBase implements IDashboardProvider
         SmartDashboard.putNumber("Note Distance", this.getNoteGroundDistance());
         SmartDashboard.putBoolean("HasNote", this.isNoteTarget());
         SmartDashboard.putNumber("AprilTag", this.aprilTagCam.getAprilTagId());
-        SmartDashboard.putNumber("ArmDegrees", this.getGoalArmDeg());
         SmartDashboard.putNumber("RotateDegrees", this.getGoalRotationDeg());
-        SmartDashboard.putString("RobotFiled", this.getRobotFeild().toString());
+        // SmartDashboard.putString("RobotFiled", this.getRobotFeild().toString());
         SmartDashboard.putNumber("Degrees", SwerveSubsystem.getRotation().getDegrees());
+        // SmartDashboard.putNumber("AprilTagArmDeg", this.getGoalArmDeg());
     }
 
     @Override

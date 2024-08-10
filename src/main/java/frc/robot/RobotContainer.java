@@ -61,17 +61,16 @@ public class RobotContainer implements IDashboardProvider {
 	private void registerCommands() {
 		NamedCommands.registerCommand("Controller", this.runController());
 		NamedCommands.registerCommand("AutoShoot", this.autoShoot());
-		NamedCommands.registerCommand("AutoAim", this.autoAim());
 		NamedCommands.registerCommand("AutoTurn", new AutoTurning(swerveSubsystem, limelight));
 		NamedCommands.registerCommand("ReleaseIntake", this.intakeSubsystem.releaseNote());
-		NamedCommands.registerCommand("AutoCheckNotes", new SequentialCommandGroup(new ParallelDeadlineGroup(new WaitCommand(3.0), new AutoCheckNoteCmd(swerveSubsystem, limelight))));
+		NamedCommands.registerCommand("OneNote", this.oneNote());
 	}
 
 	private void configBindings() {
 		this.driverJoystick.autoAmp().onTrue(
 			Commands.runOnce(() -> {this.autoAMP().schedule();}, this.elevatorSubsystem, this.ampSubsystem)
 		);
-		this.driverJoystick.autoShoot().whileTrue(
+		this.driverJoystick.autoTurning().whileTrue(
 			new AutoTurning(swerveSubsystem, limelight)
 		);
 		this.driverJoystick.stopSwerve().whileTrue(
@@ -83,49 +82,109 @@ public class RobotContainer implements IDashboardProvider {
 		this.driverJoystick.autoTrack().whileTrue(
 			new AutoTrackNote(swerveSubsystem, limelight)
 		);
+		this.driverJoystick.resetGyro().onTrue(
+			Commands.runOnce(() -> {this.swerveSubsystem.resetGyro();}, this.swerveSubsystem)
+		);
+		this.controllerJoystick.shootHigh().onTrue(
+			Commands.runEnd(() -> {this.shootHigh().schedule();}, this::stopShootHigh, this.intakeSubsystem, this.shooterSubsystem, this.shooterArmSubsystem, this.elevatorSubsystem)
+		);
+		this.controllerJoystick.autoShoot().onTrue(
+			Commands.runEnd(() -> {this.autoShoot().schedule();}, this::stopShoot, this.shooterSubsystem, this.intakeSubsystem)
+		);
+	}
+
+	private Command oneNote() {
+		return new ParallelRaceGroup(
+			new ParallelCommandGroup(
+				new ParallelCommandGroup(
+					this.shooterSubsystem.autoExecute(),
+					Commands.runEnd(() -> {this.shooterArmSubsystem.toGoalDegrees(this.limelight.getGoalArmDeg());}, this.shooterArmSubsystem::stopShooterArm, this.shooterArmSubsystem)
+				),
+				new SequentialCommandGroup(
+					new WaitCommand(1.5),
+					this.intakeSubsystem.releaseNote()	
+				)
+			),
+			new WaitCommand(5.0)
+		);
 	}
 
 	private Command runController() {
 		return new ParallelCommandGroup(
-			this.autoAim(),
-			this.intakeSubsystem.releaseNote(),
-			this.shooterSubsystem.autoExecute()
+			new ParallelCommandGroup(
+				this.shooterSubsystem.autoExecute(),
+				Commands.runEnd(() -> {this.shooterArmSubsystem.toGoalDegrees(this.limelight.getGoalArmDeg());}, this.shooterArmSubsystem::stopShooterArm, this.shooterArmSubsystem)
+			),
+			new SequentialCommandGroup(
+				new WaitCommand(1.2),
+				this.intakeSubsystem.releaseNote()	
+			)	
+		);
+	}
+
+	private Command shootHigh() {
+		return new ParallelCommandGroup(
+			new SequentialCommandGroup(
+				new ParallelRaceGroup(
+					Commands.runEnd(this.elevatorSubsystem::decline, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
+					new WaitCommand(1.8)
+				),
+				new WaitCommand(0.4),
+				new ParallelRaceGroup(
+					Commands.runEnd(this.elevatorSubsystem::rise, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
+					new WaitCommand(1.8)
+				)
+			),
+			new ParallelRaceGroup(
+				Commands.runEnd(() -> {this.shooterArmSubsystem.toGoalDegrees(29.865600746640016);}, this.shooterArmSubsystem::stopShooterArm, this.shooterArmSubsystem),
+				new WaitCommand(0.8)
+			),
+			new ParallelRaceGroup(
+				Commands.runEnd(() -> {this.shooterSubsystem.execute();}, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
+				new WaitCommand(1.8)
+			),
+			new SequentialCommandGroup(
+				new WaitCommand(1.4),
+				new ParallelRaceGroup(
+					Commands.runEnd(() -> {this.intakeSubsystem.execute(0.4);}, this.intakeSubsystem::stopIntake, this.intakeSubsystem),
+					new WaitCommand(0.8)
+				)
+			)
 		);
 	}
 
 	private Command autoShoot() {
 		return new ParallelCommandGroup(
 			new ParallelRaceGroup(
-				Commands.runEnd(this.shooterSubsystem::autoExecute, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
-				new WaitCommand(1.5)
+				Commands.runEnd(() -> {this.shooterSubsystem.execute();}, this.shooterSubsystem::stopShooter, this.shooterSubsystem),
+				new WaitCommand(1.8)
 			),
 			new SequentialCommandGroup(
-				new WaitCommand(1.0),
+				new WaitCommand(1.4),
 				new ParallelRaceGroup(
-					Commands.runEnd(this.intakeSubsystem::releaseNote, this.intakeSubsystem::stopIntake, this.intakeSubsystem),
+					Commands.runEnd(() -> {this.intakeSubsystem.execute(0.4);}, this.intakeSubsystem::stopIntake, this.intakeSubsystem),
 					new WaitCommand(1.0)
 				)
 			)
 		);
 	}
 
-	private Command autoAim() {
-		double goalPosition = this.limelight.getGoalArmDeg();
-		return Commands.runEnd(() -> {this.shooterArmSubsystem.toGoalDegrees(goalPosition);}, this.shooterArmSubsystem::stopShooterArm, this.shooterArmSubsystem);
-	}
-
 	public Command autoAMP() {
 		return new SequentialCommandGroup(
-			new ParallelRaceGroup(
-				Commands.runEnd(this.elevatorSubsystem::decline, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
-				new WaitCommand(0.8)
+			new ParallelCommandGroup(
+				new ParallelRaceGroup(
+					Commands.runEnd(this.elevatorSubsystem::decline, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
+					new WaitCommand(1.0)
+				),
+				new SequentialCommandGroup(
+					new WaitCommand(1.1),
+					new ParallelRaceGroup(
+						Commands.runEnd(() -> {this.ampSubsystem.execute(0.4);}, this.ampSubsystem::stopAmp, this.ampSubsystem),
+						new WaitCommand(0.4)
+					)	
+				)
 			),
-			new WaitCommand(0.2),
-			new ParallelRaceGroup(
-				Commands.runEnd(() -> {this.ampSubsystem.execute(0.4);}, this.ampSubsystem::stopAmp, this.ampSubsystem),
-				new WaitCommand(0.4)
-			),
-			new WaitCommand(0.2),
+			new WaitCommand(1.0),
 			new ParallelRaceGroup(
 				Commands.runEnd(this.elevatorSubsystem::rise, this.elevatorSubsystem::stopElevator, this.elevatorSubsystem),
 				new WaitCommand(0.8)
@@ -167,12 +226,18 @@ public class RobotContainer implements IDashboardProvider {
 
 	private void stopShoot() {
 		this.shooterSubsystem.stopShooter();
-		this.shooterArmSubsystem.stopShooterArm();
 		this.intakeSubsystem.stopIntake();
 	}
 
 	private void stopAmp() {
 		this.ampSubsystem.stopAmp();
+		this.elevatorSubsystem.stopElevator();
+	}
+
+	private void stopShootHigh() {
+		this.shooterSubsystem.stopShooter();
+		this.shooterArmSubsystem.stopShooterArm();
+		this.intakeSubsystem.stopIntake();
 		this.elevatorSubsystem.stopElevator();
 	}
 

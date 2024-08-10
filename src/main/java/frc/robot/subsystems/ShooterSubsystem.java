@@ -46,6 +46,11 @@ public class ShooterSubsystem extends SubsystemBase implements IDashboardProvide
         this.rightShooter.set(0.1);
     }
 
+    public void reloadNote() {
+        this.leftShooter.set(-0.1);
+        this.rightShooter.set(-0.1);
+    }
+
     public void stopShooter() {
         this.leftShooter.stopMotor();
         this.rightShooter.stopMotor();

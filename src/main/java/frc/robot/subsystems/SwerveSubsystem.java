@@ -28,6 +28,7 @@ import frc.robot.constants.DeviceId.Swerve;
 import frc.robot.constants.SwerveDriveConstants.AutoConstants;
 import frc.robot.constants.SwerveDriveConstants.EncoderOffset;
 import frc.robot.constants.SwerveDriveConstants.SwerveConstants;
+import frc.robot.lib.math.AprilTagPoseEstimator;
 import frc.robot.lib.math.MathHelper;
 
 public class SwerveSubsystem extends SubsystemBase {
@@ -185,6 +186,12 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public void resetPose(Pose2d pose) {
         odometry.resetPosition(gyro.getRotation2d(), this.getModulePosition(), pose);
+    }
+
+    public void setRobotFiled(Translation2d translation) {
+        Pose2d feild = new Pose2d(translation.getX(), translation.getY(), getRotation());
+        if (translation.getX() == 0.0 && translation.getY() == 0.0) return;
+        this.resetPose(feild);
     }
 
     public ChassisSpeeds getSpeeds() {
